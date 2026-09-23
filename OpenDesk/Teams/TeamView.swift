@@ -195,7 +195,13 @@ private struct TeamDetail: View {
         .refreshable { await load() }
     }
 
-    private func load() async { members = (try? await store.members(of: team)) ?? [] }
+    /// Keeps the last good list: a refresh of the teams list can cancel this request mid-flight.
+    private func load() async {
+        for attempt in 0..<3 {
+            if let m = try? await store.members(of: team), !m.isEmpty { members = m; return }
+            try? await Task.sleep(for: .milliseconds(400 * (attempt + 1)))
+        }
+    }
 
     private func act(_ ok: String, _ f: () async throws -> Void) async {
         do { try await f(); status = ok; await load() } catch { status = error.localizedDescription }
