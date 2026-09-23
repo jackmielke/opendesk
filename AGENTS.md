@@ -1,6 +1,6 @@
 # Adding your own tool to OpenDesk
 
-OpenDesk is a native iOS shell for self-hosted, open-source business tools. Each tool is a **connector**: a small REST client plus a few SwiftUI screens. If your team runs something that isn't here yet (Twenty, Plane, Zammad, Uptime Kuma, Baserow, Directus, Cal.com…), fork this repo and ask your coding agent:
+OpenDesk is a native iOS shell for self-hosted, open-source business tools. Each tool is a **connector**: a small REST client plus a few SwiftUI screens. Built in today: NocoDB, Supabase, Airtable, Grafana, Metabase, GitLab and Excalidraw. If your team runs something that isn't here yet (Twenty, Plane, Zammad, Uptime Kuma, Baserow, Directus, Cal.com…), fork this repo and ask your coding agent:
 
 > Add an OpenDesk connector for **<tool>** at **<url>**. Follow AGENTS.md.
 
@@ -14,7 +14,7 @@ This file is written for that agent.
 | 2. Screens | `OpenDesk/<Tool>/<Tool>Views.swift` | a list screen → a detail screen; reuse `card()`, `Chip`, `ErrorCard`, `AskSheet` |
 | 3. Settings | `Core/AppConfig.swift` + `Home/SettingsView.swift` | add `<tool>URL` / `<tool>Token` with `didSet` persistence and a Section |
 | 4. Tab | `App/OpenDeskApp.swift` | add a `RootTab` case, a `Tab(...)`, a tint, and an `opendesk://<tool>` deep link |
-| 5. Home | `Home/HomeView.swift` | add a `connector(...)` tile and a `load<Tool>()` that sets its live dot |
+| 5. Home | `Core/BrandMark.swift` + `Home/HomeView.swift` | add a case to `Integration` (name, color, symbol or SVG mark), then its `state(_:)` and a `load<Tool>()` for the live dot |
 | 6. Teams | `Teams/Supabase.swift` | add the fields to `publish` / `pull` and a column to `team_connections` so admins can share the setup |
 | 7. AI | your detail screen | give `AskSheet` a `context` closure that returns **numbers and names, not pixels**, trimmed to `AI.contextBudget(config)` |
 
@@ -22,7 +22,7 @@ This file is written for that agent.
 
 - **Talk to the tool's existing API.** No proxy, no OpenDesk server. Tokens stay on the device (or in the team's RLS-protected row).
 - **Parse loosely.** Use `JSONValue` for anything whose shape depends on user data; only model what the screens need.
-- **Tables-shaped data? Don't write new screens.** Implement `TableSource` (see `NocoTableSource` and `Supabase/SupabaseApp.swift → SupabaseTableSource`) and you get list, drag-and-drop board, insights charts, the typed editor and natural-language edits for free. Map your field types onto NocoDB `uidt` names (`SingleSelect`, `Currency`, `Date`, …).
+- **Tables-shaped data? Don't write new screens.** Implement `TableSource` (see `NocoTableSource` and `Supabase/SupabaseApp.swift → SupabaseTableSource`) and you get Agenda, Grid, List, drag-and-drop Board, Insights, the typed editor and voice edits for free (see `Airtable/Airtable.swift → AirtableTableSource` for a compact example). Map your field types onto NocoDB `uidt` names (`SingleSelect`, `Currency`, `Date`, …).
 - **Charts are native.** Prefer Swift Charts from raw data over server-rendered images; fall back to images only when the data isn't reachable.
 - **AI is private by default.** `AI.ask` uses on-device Apple Intelligence (4K-token window) unless the user adds a Claude key. Keep context compact.
 - **Brand color**: add `static let <tool> = Color(...)` in an `extension Brand` next to your views.

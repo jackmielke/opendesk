@@ -1,88 +1,119 @@
 # OpenDesk
 
-A native iOS app for the self-hosted, open-source tools companies already run: **NocoDB** (no-code database / CRM), **Grafana** (dashboards), **Metabase** (BI) and **GitLab** (code, merge requests, CI). None of them ships an official mobile app for this. OpenDesk is one SwiftUI app that talks to each tool's existing REST API. There is no backend of its own and nothing to migrate.
+**The mobile app your open-source stack never shipped.**
 
-Built at an AI enterprise hackathon in Palo Alto, September 2026. **Site:** https://opendesk-app.vercel.app · **iPhone beta:** https://testflight.apple.com/join/HUq3TWc1 · **Add your own tool:** see [AGENTS.md](AGENTS.md).
+OpenDesk is a native iPhone app for the tools teams already run: **NocoDB, Supabase, Airtable, Grafana, Metabase, GitLab and Excalidraw**. Connect your data, invite your team, and everyone gets the same app, with boards, agendas, dashboards, alerts, widgets, Siri and on-device AI.
+
+It talks straight to each tool's existing API. There's no fork of the tool, no OpenDesk server, and no data migration.
+
+[**Website**](https://opendesk-app.vercel.app) · [**Join the iPhone beta**](https://testflight.apple.com/join/HUq3TWc1) · [**Add your own tool**](AGENTS.md)
 
 <p>
-<img src="docs/screenshots/home.jpg" width="200" alt="Home">
-<img src="docs/screenshots/board.jpg" width="200" alt="NocoDB board">
-<img src="docs/screenshots/review.jpg" width="200" alt="AI edit review">
-<img src="docs/screenshots/dashboard.jpg" width="200" alt="Grafana dashboard">
+<img src="docs/screenshots/home.jpg" width="190" alt="Home with every integration">
+<img src="docs/screenshots/agenda.jpg" width="190" alt="Agenda view of a Supabase table">
+<img src="docs/screenshots/board.jpg" width="190" alt="Drag-and-drop board">
+<img src="docs/screenshots/review.jpg" width="190" alt="Voice edit review">
 </p>
 <p>
-<img src="docs/screenshots/alerts.jpg" width="200" alt="Grafana alerts">
-<img src="docs/screenshots/insights.jpg" width="200" alt="Table insights">
-<img src="docs/screenshots/project.jpg" width="200" alt="GitLab project">
-<img src="docs/screenshots/mr.jpg" width="200" alt="MR AI brief">
+<img src="docs/screenshots/dashboard.jpg" width="190" alt="Grafana dashboard, drawn natively">
+<img src="docs/screenshots/alerts.jpg" width="190" alt="Grafana alerts inbox">
+<img src="docs/screenshots/metabase.jpg" width="190" alt="Metabase dashboard">
+<img src="docs/screenshots/whiteboard.jpg" width="190" alt="Excalidraw pipeline wall">
 </p>
-<p><img src="docs/screenshots/metabase.jpg" width="200" alt="Metabase dashboard"></p>
 
-## What it does
+## Integrations
 
-| Module | Talks to | On the phone |
+| Tool | Connect with | On the phone |
 |---|---|---|
-| **Tables** | NocoDB `/api/v2` | Browse bases and tables · list, **drag-and-drop Kanban** on any single-select field, **Insights** charts · typed record editor (select chips, dates, ratings, call/email) · create and delete rows |
-| **Dashboards** | Grafana `/api/search`, `/api/dashboards`, `/api/ds/query`, `/render` | Dashboards redrawn as **native Swift Charts** from raw datasource queries, with a server-rendered PNG fallback · 1h/6h/24h/7d ranges · 15s live refresh · scrub for values |
-| **Analytics** | Metabase `/api/search`, `/api/dashboard`, dashcard query | Dashboards with tabs, every question re-rendered natively: scalars with trend, line/area/bar/row with breakouts, pie, funnel, scatter, tables · AI takeaways |
-| **Code** | GitLab `/api/v4` | Pinned OSS projects · MRs, issues, pipelines · CI health strip · diffs by file · job stages · comment, approve and retry with a token |
-| **Home** | all three | Cross-tool snapshot: pipeline value, a live Grafana signal and CI health · "Brief me" |
-| **Widget** | NocoDB | Home and lock screen widget with pipeline value and the next booked events |
-| **Offline** | NocoDB | Every read is cached to disk; if the server drops, the app keeps working from the last synced copy |
-| **Siri** | NocoDB, Grafana | "What's booked next in OpenDesk", "How's the pipeline in OpenDesk", "What's firing in OpenDesk" |
+| **NocoDB** | URL + API token | Every base and table. Agenda, Grid, List, Board, Insights. Typed editor. Offline copy. |
+| **Supabase** | Owner: one access token, then pick a project. Member: sign in as a user of your app. | Your tables with your row-level security. Enums become board lanes. Live notifications on changes. |
+| **Airtable** | Personal access token | Every base the token can see, in the same views. Or copy a base into NocoDB with its own importer. |
+| **Grafana** | URL (+ optional token) | Dashboards redrawn with Swift Charts from raw queries, time ranges and live mode, and an alerts inbox with AI triage. |
+| **Metabase** | URL + API key | Dashboards and tabs, with every question redrawn natively: KPIs, lines, stacked bars, pie, funnel, scatter, tables. |
+| **GitLab** | URL (+ optional token) | Merge requests, issues, pipelines, diffs, and a CI health strip. Summarize, comment, approve, retry. |
+| **Excalidraw** | Nothing | "Map my database" and "Pipeline wall" boards generated from your data, fully editable, exported as `.excalidraw` files. |
 
-### AI, private by default
+Spreadsheets import too: pick a CSV from Files and column types are detected for you.
 
-- **Ask** (the ✦ button on any table, dashboard or project): questions answered against that screen's live data.
-- **Tell it what changed** (the bar at the bottom of a table): *"Summit Bank tasting went great, book it, Dana captains"* becomes a reviewed diff (`Stage: Tasting → Booked`, `Lead Captain: → Dana`), and you tap Apply to write it back to NocoDB.
-- **Summarize this MR / issue**: a three-bullet risk brief from the description, diff and discussion.
+## Views that aren't just tables
 
-The default engine is **Apple Intelligence running on the phone** (`FoundationModels`), with guided generation (`@Generable`) for structured edits, so business data never leaves the device. If you add an Anthropic key in Settings, it switches to Claude for larger context.
+Any table-shaped data (NocoDB, Supabase or Airtable) gets the same set of views:
 
-The on-device model has a 4K-token window. To make it reliable at picking the right row, the app first narrows the table to the few rows the instruction plausibly names, using lexical scoring. It also passes the model each select column's allowed options and the existing values of short-vocabulary text columns.
+- **Agenda:** calendar-first, based on the Radish Hub. It shows a greeting, 30-day totals, a date strip, and "party cards" grouped by day with a status stripe, guest count, value and venue. It works out which columns hold dates, people, money, places and status from their names.
+- **Grid:** Airtable-style, with a frozen name column, typed headers, colored tags, and taps to open the full record.
+- **Board:** drag-and-drop lanes on any select or enum column, with totals per lane.
+- **Insights:** charts built automatically from money, select and date columns.
+- **List** and a **typed record editor**: select chips, date pickers, ratings, tap-to-call and tap-to-email.
+
+## Built for the phone
+
+| | |
+|---|---|
+| **Voice edits** | Hold the mic and say *"Summit Bank tasting went great, book it, Dana captains."* You get a diff to review, and Apply writes it back. |
+| **On-device AI** | Apple Intelligence answers questions about any table, dashboard or merge request, so your data never leaves the phone. Add a Claude key for bigger context. |
+| **Notifications** | Supabase Realtime turns row changes into banners, like "Presidio Gala updated, Stage: Proposal → Booked". |
+| **Siri** | "What's booked next in OpenDesk", "How's the pipeline in OpenDesk", "What's firing in OpenDesk". |
+| **Widgets** | Pipeline value and the next booked events on the home and lock screen. |
+| **Offline** | Every NocoDB read is cached, so it keeps working at a venue with no signal. |
+
+## Teams
+
+Teams run on Supabase Auth, Postgres and row-level security.
+
+- **Admins** create a team, connect the tools, and publish the setup once.
+- **Members** sign in (email link or password), join with a 6-letter code or QR, and get the same app on launch.
+- Members can read the shared setup but can't change it. Outsiders see nothing, and the last admin can't be removed.
 
 ## Run it
 
 ```bash
-# 1. A NocoDB to talk to
+# NocoDB (and optionally Metabase) to talk to
 docker run -d --name nocodb -p 8080:8080 -v nocodb_data:/usr/app/data nocodb/nocodb:latest
-# create an account at http://localhost:8080, then an API token (Team & Settings → API Tokens)
+docker run -d --name metabase -p 3000:3000 metabase/metabase:latest
 
-# 2. Seed the demo catering CRM (fictional data)
+# Fictional catering CRM for the demo
 NOCO_TOKEN=... python3 scripts/seed_nocodb.py
 
-# 2b. Optional: Metabase with its sample E-commerce dashboard
-docker run -d --name metabase -p 3000:3000 metabase/metabase:latest
-# finish setup at http://localhost:3000, then Admin → Authentication → API keys
+# Optional: prefill connections for your builds (gitignored)
+cp Config/LocalDefaults.example.plist Config/LocalDefaults.plist
 
-# 3. Point the app at it (optional, you can also set this in the app's Settings)
-cp Config/LocalDefaults.example.plist Config/LocalDefaults.plist   # set nocoURL to your Mac's LAN IP
-
-# 4. Build
+# Build
 xcodegen generate
-open OpenDesk.xcodeproj    # set your team, run on a device with Apple Intelligence
+open OpenDesk.xcodeproj   # set your team; run on an iPhone with Apple Intelligence for on-device AI
 ```
 
-Grafana defaults to the public `play.grafana.org`, and GitLab to public projects on `gitlab.com`. Both work with no token.
+Grafana defaults to `play.grafana.org` and GitLab to public `gitlab.com` projects, so both work with no setup.
+
+To browse a Supabase app as its users (rather than as the owner), the project owner runs the read-only `opendesk_schema()` helper once. The SQL is in the app under Supabase → "I use the app".
+
+## Add your own tool
+
+Every integration follows the same pattern: a small REST client plus a few SwiftUI screens. Fork the repo and tell your coding agent:
+
+> Add an OpenDesk connector for **Twenty CRM** at https://crm.mycompany.com. Follow AGENTS.md.
+
+For table-shaped data, implement one `TableSource`, and Agenda, Grid, Board, Insights, the editor and voice edits all work with it. See [AGENTS.md](AGENTS.md).
 
 ## Layout
 
 ```
 OpenDesk/
-  App/        entry point, tab root, deep links (opendesk://tables)
-  Core/       JSONValue, HTTP, AppConfig (UserDefaults + LocalDefaults.plist), theme
-  NocoDB/     client, table/board/insights views, record editor, AI command bar
-  Grafana/    client (search, dashboard JSON, ds/query → Series), dashboard + panel views
-  GitLab/     client, project/MR/issue/pipeline/diff views
-  Metabase/   client (dashboards, tabs, dashcard queries), native card renderers
-  AI/         engine switch (on-device ⇄ Claude), AskSheet chat, edit planning
-  Home/       cross-tool home, settings
-OpenDeskWidget/   WidgetKit pipeline widget
-scripts/      seed_nocodb.py, make_icon.swift
+  App/         entry point, tabs, deep links, Siri shortcuts
+  Core/        JSON, HTTP, config, theme, brand marks
+  NocoDB/      TableSource, Agenda / Grid / Board / Insights, record editor, voice command bar
+  Supabase/    owner + member connect, RLS-respecting source, Realtime notifications
+  Airtable/    direct connector and TableSource
+  Grafana/     dashboards (ds/query → Swift Charts), alerts inbox
+  Metabase/    dashboards, tabs, native card renderers
+  GitLab/      projects, MRs, issues, pipelines, diffs
+  Whiteboard/  Excalidraw boards generated from data
+  Teams/       Supabase auth, teams, roles, shared connections
+  Onboarding/  connect, Airtable / CSV import, invite
+  AI/          on-device ⇄ Claude, ask sheet, edit planning, voice input
+OpenDeskWidget/  WidgetKit pipeline widget
+site/            landing page (Vercel)
 ```
 
-## Roadmap ideas
+## License
 
-- Grafana alerting inbox with push (Alertmanager webhook → APNs), acknowledge/silence from the lock screen
-- More connectors on the same pattern: Twenty, Plane, Zammad, Uptime Kuma
-- Upstream: contribute the NocoDB and Grafana clients as standalone Swift packages
+MIT. Built at an AI enterprise hackathon in Palo Alto, September 2026, with Claude Code.
