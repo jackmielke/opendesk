@@ -8,25 +8,32 @@ struct CommandBar: View {
     @State private var thinking = false
     @State private var plan: EditPlan?
     @State private var error: String?
+    @State private var voice = VoiceInput()
     @FocusState private var focused: Bool
 
     var body: some View {
         VStack(spacing: 8) {
-            if let error {
+            if let error = error ?? voice.error {
                 Text(error).font(.caption).foregroundStyle(.orange).frame(maxWidth: .infinity, alignment: .leading)
             }
             HStack(spacing: 10) {
                 Image(systemName: thinking ? "ellipsis" : "sparkles")
                     .foregroundStyle(Brand.ai)
                     .symbolEffect(.variableColor.iterative, isActive: thinking)
-                TextField(placeholder, text: $text, axis: .vertical)
+                TextField(voice.isListening ? "Listening…" : placeholder,
+                          text: voice.isListening ? .constant(voice.transcript) : $text, axis: .vertical)
                     .lineLimit(1...3)
                     .focused($focused)
                     .submitLabel(.go)
                     .onSubmit { Task { await run() } }
-                if !text.isEmpty {
+                if !text.isEmpty && !voice.isListening {
                     Button { Task { await run() } } label: { Image(systemName: "arrow.up.circle.fill").font(.title2) }
                         .tint(Brand.ai).disabled(thinking)
+                } else {
+                    HoldToTalkButton(voice: voice) { spoken in
+                        text = spoken
+                        Task { await run() }
+                    }
                 }
             }
             .padding(.horizontal, 14).padding(.vertical, 11)

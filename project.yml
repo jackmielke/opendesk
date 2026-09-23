@@ -37,6 +37,8 @@ targets:
           NSAllowsArbitraryLoads: true
           NSAllowsLocalNetworking: true
         NSLocalNetworkUsageDescription: "OpenDesk connects to self-hosted NocoDB, Grafana and GitLab servers on your network."
+        NSMicrophoneUsageDescription: "Hold the mic to tell OpenDesk what changed, instead of typing."
+        NSSpeechRecognitionUsageDescription: "Your words are transcribed on this iPhone to turn them into table edits."
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.jackmielke.opendesk

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0697BD1D2B82E9E9D18D42D3 /* PipelineWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = E38C0AA8227B4DA9973E43EC /* PipelineWidget.swift */; };
+		07986B0C5FCC2EC714E49309 /* VoiceInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5566AB48EFA804717EF3D2E9 /* VoiceInput.swift */; };
 		08F195A7719FCAC959F147C0 /* AI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCBA00032D9E98578A6F757 /* AI.swift */; };
 		101A4E7E1C260AD51868F08F /* OpenDeskApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DD232A1E963F5D68877EE3 /* OpenDeskApp.swift */; };
 		1C3B6313FA07B71C7F8D7D48 /* AskSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4FA33E23AAE61EE1EF2649 /* AskSheet.swift */; };
@@ -72,6 +73,7 @@
 		435F6619CC32091B838C88C7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		43DD232A1E963F5D68877EE3 /* OpenDeskApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenDeskApp.swift; sourceTree = "<group>"; };
 		464C7BE24CC53E4C9E2EDA36 /* HTTP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTP.swift; sourceTree = "<group>"; };
+		5566AB48EFA804717EF3D2E9 /* VoiceInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceInput.swift; sourceTree = "<group>"; };
 		65C65BC488C6366A004CC199 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		6A2FA5532700E20527B4AAE9 /* Shortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shortcuts.swift; sourceTree = "<group>"; };
 		6A8E8EA4FD2B351B79693EEC /* LocalDefaults.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = LocalDefaults.plist; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 			children = (
 				FCCBA00032D9E98578A6F757 /* AI.swift */,
 				1F4FA33E23AAE61EE1EF2649 /* AskSheet.swift */,
+				5566AB48EFA804717EF3D2E9 /* VoiceInput.swift */,
 			);
 			path = AI;
 			sourceTree = "<group>";
@@ -345,6 +348,7 @@
 				A37042C17A171EB77E0E57FE /* SettingsView.swift in Sources */,
 				87F2A7BAD2B32B7E266C1F17 /* Shortcuts.swift in Sources */,
 				7D6215D0B06C3856A0E48BB3 /* Theme.swift in Sources */,
+				07986B0C5FCC2EC714E49309 /* VoiceInput.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
