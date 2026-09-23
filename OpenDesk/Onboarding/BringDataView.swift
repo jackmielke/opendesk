@@ -15,6 +15,7 @@ struct BringDataView: View {
     @State private var showShare = false
     @State private var showTeam = false
     @State private var showSupabase = false
+    @State private var showAirtableDirect = false
 
     enum ConnectionStatus: Equatable { case unknown, checking, ok(bases: Int, tables: Int), failed(String) }
 
@@ -47,24 +48,25 @@ struct BringDataView: View {
                         }
                     }
                     .disabled(config.nocoToken.isEmpty || status == .checking)
-                } header: { Label("1 · Connect NocoDB", systemImage: "tablecells.fill") } footer: {
+                } header: { Label("Connect NocoDB", systemImage: "tablecells.fill") } footer: {
                     Text("In NocoDB: Team & Settings → Tokens → Create token. Paste it here once.")
                 }
 
                 Section {
-                    Button { showSupabase = true } label: {
-                        row("Connect a Supabase app", "Already built on Supabase? Sign in as your app's user and browse your tables under your own security rules.", "bolt.horizontal.circle.fill", Brand.supabase)
-                    }
-                } header: { Label("Or bring your Supabase", systemImage: "bolt.horizontal.fill") }
+                    Button { showSupabase = true } label: { brandRow(.supabase, "Connect Supabase", "Pick a project with one access token, or sign in as a user of your app.") }
+                    Button { showAirtableDirect = true } label: { brandRow(.airtable, "Connect Airtable", "Paste a personal access token. Every base shows up as boards and charts.") }
+                } header: { Label("Or connect what you already use", systemImage: "link") }
 
                 Section {
                     Button { showAirtable = true } label: {
-                        row("Import from Airtable", "Paste a base link and your Airtable token. NocoDB copies every table, view and record.", "arrow.down.doc.fill", .yellow)
+                        row("Copy an Airtable base into NocoDB", "Move off Airtable: NocoDB's importer copies every table, view and record.", "arrow.down.doc.fill", .yellow)
                     }
                     Button { showCSVPicker = true } label: {
                         row("Import a spreadsheet", "Pick a CSV from Files. Column types are detected for you.", "tablecells.badge.ellipsis", .green)
                     }
-                } header: { Label("2 · Bring data in (optional)", systemImage: "square.and.arrow.down.on.square") }
+                } header: { Label("Bring data into NocoDB", systemImage: "square.and.arrow.down.on.square") } footer: {
+                    if !isConnected { Text("Connect NocoDB above first; imports land in your NocoDB.") }
+                }
                 .disabled(!isConnected)
 
                 Section {
@@ -74,14 +76,13 @@ struct BringDataView: View {
                     Button { showShare = true } label: {
                         row("Share this setup", "Show a QR code a teammate scans with their Camera to get the same connections.", "qrcode", Brand.ai)
                     }
-                } header: { Label("3 · Invite your team", systemImage: "person.2.fill") }
-                .disabled(!isConnected)
+                } header: { Label("Invite your team", systemImage: "person.2.fill") }
             }
             .navigationTitle("Bring your data")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button(isConnected ? "Done" : "Skip") { finish() }
+                    Button("Done") { finish() }
                 }
             }
             .task { if !config.nocoToken.isEmpty { await check() } }
@@ -90,6 +91,7 @@ struct BringDataView: View {
             .sheet(isPresented: $showShare) { ShareSetupView() }
             .sheet(isPresented: $showTeam) { TeamView() }
             .sheet(isPresented: $showSupabase) { SupabaseConnectView() }
+            .sheet(isPresented: $showAirtableDirect) { AirtableConnectView() }
             .fileImporter(isPresented: $showCSVPicker, allowedContentTypes: [.commaSeparatedText, .plainText, .tabSeparatedText]) { result in
                 guard case .success(let url) = result else { return }
                 let access = url.startAccessingSecurityScopedResource()
@@ -118,6 +120,16 @@ struct BringDataView: View {
     private func preset(_ title: String, _ url: String) -> some View {
         Button(title) { config.nocoURL = url }
             .buttonStyle(.bordered).font(.caption)
+    }
+
+    private func brandRow(_ kind: Integration, _ title: String, _ sub: String) -> some View {
+        HStack(spacing: 12) {
+            BrandMark(kind: kind, size: 26).frame(width: 30)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title).foregroundStyle(.primary)
+                Text(sub).font(.caption).foregroundStyle(.secondary)
+            }
+        }
     }
 
     private func row(_ title: String, _ sub: String, _ icon: String, _ color: Color) -> some View {

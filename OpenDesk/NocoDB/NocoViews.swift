@@ -11,6 +11,7 @@ struct NocoHomeView: View {
     @State private var loading = true
     @State private var importing = false
     @State private var showSupabase = false
+    @State private var showAirtable = false
 
     var body: some View {
         NavigationStack {
@@ -20,7 +21,20 @@ struct NocoHomeView: View {
                     ErrorCard(message: error) { Task { await load() } }
                         .listRowBackground(Color.clear)
                 }
-                if SupabaseApp.shared.isConfigured {
+                if !AirtableStore.shared.bases.isEmpty {
+                    ForEach(AirtableStore.shared.bases) { b in
+                        Section {
+                            ForEach(AirtableStore.shared.tables[b.id] ?? []) { t in
+                                NavigationLink(value: NocoTable(json: .object(["id": .string(t.id), "title": .string(t.name), "base_id": .string("airtable:" + b.id)]))) {
+                                    Label(t.name, systemImage: "tablecells")
+                                }
+                            }
+                        } header: {
+                            HStack(spacing: 6) { BrandMark(kind: .airtable, size: 14); Text("Airtable · \(b.name)") }
+                        }
+                    }
+                }
+                if SupabaseApp.shared.isAdmin || SupabaseApp.shared.session != nil {
                     Section {
                         ForEach(SupabaseApp.shared.tables) { t in
                             NavigationLink(value: NocoTable(json: .object(["id": .string(t.name), "title": .string(t.title), "base_id": .string("supabase")]))) {
@@ -32,7 +46,7 @@ struct NocoHomeView: View {
                         }
                     } header: {
                         HStack {
-                            Image(systemName: "bolt.horizontal.circle.fill").foregroundStyle(Brand.supabase)
+                            BrandMark(kind: .supabase, size: 14)
                             Text("Supabase · \(SupabaseApp.shared.projectRef)")
                             Spacer()
                             if let e = SupabaseApp.shared.session?.email { Text(e).font(.caption2).textCase(nil) }
@@ -60,13 +74,19 @@ struct NocoHomeView: View {
             .overlay { if loading && bases.isEmpty { ProgressView() } }
             .navigationTitle("Tables")
             .toolbar {
-                Button { showSupabase = true } label: { Image(systemName: "bolt.horizontal.circle") }
-                Button { importing = true } label: { Image(systemName: "square.and.arrow.down") }
+                Menu {
+                    Button { showSupabase = true } label: { Label("Supabase", systemImage: "bolt.fill") }
+                    Button { showAirtable = true } label: { Label("Airtable", systemImage: "square.stack.3d.up.fill") }
+                    Button { importing = true } label: { Label("NocoDB, CSV and teams", systemImage: "square.and.arrow.down") }
+                } label: { Image(systemName: "plus.circle") }
             }
-            .sheet(isPresented: $showSupabase) { SupabaseConnectView() }
+            .sheet(isPresented: $showSupabase, onDismiss: { Task { await load() } }) { SupabaseConnectView() }
+            .sheet(isPresented: $showAirtable, onDismiss: { Task { await load() } }) { AirtableConnectView() }
             .sheet(isPresented: $importing, onDismiss: { Task { await load() } }) { BringDataView() }
             .navigationDestination(for: NocoTable.self) { t in
-                if t.baseId == "supabase", let sb = SupabaseApp.shared.tables.first(where: { $0.name == t.id }) {
+                if t.baseId.hasPrefix("airtable:"), let at = AirtableStore.shared.tables[String(t.baseId.dropFirst(9))]?.first(where: { $0.id == t.id }) {
+                    TableScreen(table: t, source: AirtableTableSource(store: AirtableStore.shared, table: at))
+                } else if t.baseId == "supabase", let sb = SupabaseApp.shared.tables.first(where: { $0.name == t.id }) {
                     TableScreen(table: t, source: SupabaseTableSource(app: SupabaseApp.shared, table: sb))
                 } else {
                     TableScreen(table: t, source: NocoTableSource(client: config.noco, tableId: t.id))
@@ -82,7 +102,9 @@ struct NocoHomeView: View {
         defer { loading = false }
         do {
             let noco = config.noco
-            if SupabaseApp.shared.session != nil { try? await SupabaseApp.shared.loadSchema() }
+            if SupabaseApp.shared.session != nil || SupabaseApp.shared.isAdmin { try? await SupabaseApp.shared.loadSchema() }
+            if AirtableStore.shared.isConnected { try? await AirtableStore.shared.load() }
+            guard !config.nocoToken.isEmpty else { bases = []; error = nil; return }
             let b = try await noco.bases()
             var t: [String: [NocoTable]] = [:]
             try await withThrowingTaskGroup(of: (String, [NocoTable]).self) { group in

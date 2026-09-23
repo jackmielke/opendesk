@@ -17,6 +17,7 @@ struct HomeView: View {
     @State private var gitlabProject: GLProject?
     @State private var showSettings = false
     @State private var showTeam = false
+    @State private var connecting: Integration?
     @State private var brief = false
 
     var body: some View {
@@ -65,26 +66,69 @@ struct HomeView: View {
     // MARK: Sections
 
     private var connectors: some View {
-        HStack(spacing: 8) {
-            connector("NocoDB", "tablecells.fill", Brand.noco, nocoOK, cached: Connectivity.shared.nocoOffline) { tab = .tables }
-            connector("Grafana", "chart.xyaxis.line", Brand.grafana, grafanaOK) { tab = .dashboards }
-            connector("GitLab", "chevron.left.forwardslash.chevron.right", Brand.gitlab, gitlabOK) { tab = .code }
-            connector("Metabase", "chart.pie.fill", Brand.metabase, metabaseOK) { tab = .analytics }
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 10) {
+                ForEach(Integration.allCases) { i in tile(i) }
+            }
+            .scrollTargetLayout()
+        }
+        .scrollTargetBehavior(.viewAligned)
+        .contentMargins(.horizontal, 0)
+        .scrollClipDisabled()
+        .sheet(item: $connecting) { i in
+            switch i {
+            case .supabase: SupabaseConnectView()
+            case .airtable: AirtableConnectView()
+            default: BringDataView()
+            }
         }
     }
 
-    private func connector(_ name: String, _ icon: String, _ color: Color, _ ok: Bool?, cached: Bool = false, action: @escaping () -> Void) -> some View {
-        Button(action: action) {
-            VStack(alignment: .leading, spacing: 8) {
-                HStack {
-                    Image(systemName: icon).foregroundStyle(color)
-                    Spacer()
-                    Circle().fill(ok == nil ? Color.gray : cached ? .orange : ok! ? .green : .red).frame(width: 7)
+    /// nil = checking, true = live, false = needs connecting
+    private func state(_ i: Integration) -> (Bool?, String) {
+        switch i {
+        case .noco:
+            if config.nocoToken.isEmpty { return (false, "Connect") }
+            if Connectivity.shared.nocoOffline { return (true, "Cached") }
+            return (nocoOK, nocoOK == false ? "Can't reach" : "Live")
+        case .supabase:
+            let sb = SupabaseApp.shared
+            return (sb.isAdmin || sb.session != nil) ? (true, "\(sb.tables.count) tables") : (false, "Connect")
+        case .airtable:
+            let at = AirtableStore.shared
+            return at.isConnected ? (at.bases.isEmpty ? nil : true, "\(at.bases.count) bases") : (false, "Connect")
+        case .grafana: return (grafanaOK, grafanaOK == false ? "Can't reach" : "Live")
+        case .metabase: return config.metabaseKey.isEmpty ? (false, "Connect") : (metabaseOK, metabaseOK == false ? "Can't reach" : "Live")
+        case .gitlab: return (gitlabOK, gitlabOK == false ? "Can't reach" : "Live")
+        case .excalidraw: return (true, "Ready")
+        }
+    }
+
+    private func tile(_ i: Integration) -> some View {
+        let (ok, label) = state(i)
+        return Button {
+            if ok == false { connecting = i } else {
+                switch i {
+                case .noco, .supabase, .airtable: tab = .tables
+                case .grafana: tab = .dashboards
+                case .metabase: tab = .analytics
+                case .gitlab: tab = .code
+                case .excalidraw: tab = .whiteboard
                 }
-                Text(name).font(.caption.weight(.semibold)).lineLimit(1).minimumScaleFactor(0.8)
-                Text(ok == nil ? "Connecting" : cached ? "Cached" : ok! ? "Live" : "Offline").font(.caption2).foregroundStyle(.secondary)
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
+        } label: {
+            VStack(alignment: .leading, spacing: 8) {
+                HStack(alignment: .top) {
+                    BrandMark(kind: i, size: 24)
+                    Spacer()
+                    Circle().fill(ok == nil ? Color.gray : ok! ? (label == "Cached" ? .orange : .green) : .clear)
+                        .overlay(Circle().stroke(ok == false ? Color.secondary : .clear, lineWidth: 1))
+                        .frame(width: 7)
+                }
+                Text(i.name).font(.caption.weight(.semibold)).lineLimit(1)
+                Text(ok == nil ? "Connecting" : label).font(.caption2).foregroundStyle(ok == false ? i.color : .secondary)
+            }
+            .frame(width: 92, alignment: .leading)
             .card(padding: 10)
         }
         .buttonStyle(.plain)
@@ -225,7 +269,9 @@ struct HomeView: View {
         async let g: Void = loadGrafana()
         async let l: Void = loadGitLab()
         async let m: Void = loadMetabase()
-        _ = await (n, g, l, m)
+        async let a: Void = { if AirtableStore.shared.isConnected && AirtableStore.shared.bases.isEmpty { try? await AirtableStore.shared.load() } }()
+        async let s: Void = { if SupabaseApp.shared.isAdmin || SupabaseApp.shared.session != nil { try? await SupabaseApp.shared.loadSchema() } }()
+        _ = await (n, g, l, m, a, s)
     }
 
     private func loadNoco() async {

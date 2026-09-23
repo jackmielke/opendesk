@@ -14,6 +14,8 @@
 		1C3B6313FA07B71C7F8D7D48 /* AskSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4FA33E23AAE61EE1EF2649 /* AskSheet.swift */; };
 		27AFC5343E7DD1DD5D879E96 /* JSONValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F93D4596513BF71DB6A799 /* JSONValue.swift */; };
 		285011AB16A4B7862782F355 /* CommandBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A82EE78C82A27B8DFC03E7 /* CommandBar.swift */; };
+		2943A1DCB037D04DAD0E35E0 /* BrandMark.swift in Sources */ = {isa = PBXBuildFile; fileRef = D90471C48D5D38F100FBE61A /* BrandMark.swift */; };
+		2DE30E4AC66296FE2F559206 /* Airtable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF8C4FFEF374DB3074ACDF4 /* Airtable.swift */; };
 		30940D29A01E07581F268395 /* GrafanaClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093347DEA43B9ADFBC9DEDE1 /* GrafanaClient.swift */; };
 		3749C65A8518EC64A51BA8F3 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE22F08AA322BBB5ACF0C742 /* HomeView.swift */; };
 		4FA4322180E23DEC0DF05D77 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B943D9F4E44D59D95B7D560E /* AppConfig.swift */; };
@@ -103,9 +105,11 @@
 		B943D9F4E44D59D95B7D560E /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
 		C0BB8DD0220AC511222157F2 /* MetabaseClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetabaseClient.swift; sourceTree = "<group>"; };
 		CE22F08AA322BBB5ACF0C742 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		D90471C48D5D38F100FBE61A /* BrandMark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrandMark.swift; sourceTree = "<group>"; };
 		DFFA22618AF73EF5F6BA5D24 /* GitLabViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitLabViews.swift; sourceTree = "<group>"; };
 		E2DE6DC12C30D8303241F1B3 /* NocoClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NocoClient.swift; sourceTree = "<group>"; };
 		E38C0AA8227B4DA9973E43EC /* PipelineWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipelineWidget.swift; sourceTree = "<group>"; };
+		EEF8C4FFEF374DB3074ACDF4 /* Airtable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Airtable.swift; sourceTree = "<group>"; };
 		F6953E3E11CAE7E55289A70B /* Excalidraw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Excalidraw.swift; sourceTree = "<group>"; };
 		F6CF8ECCFFCD619642C9A5E0 /* SupabaseConnectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseConnectView.swift; sourceTree = "<group>"; };
 		FCCBA00032D9E98578A6F757 /* AI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AI.swift; sourceTree = "<group>"; };
@@ -173,6 +177,7 @@
 				9F3A42F1924C9B38EC54BADC /* Assets.xcassets */,
 				8CFCBB0A615E0CF0D5A014B1 /* Info.plist */,
 				2FE15C1E6D2EE6A274D06FC5 /* AI */,
+				C9C3F8957FC9D3C7E0EE7B1A /* Airtable */,
 				8D02F8519B95A758DF146BBD /* App */,
 				B23EF60A548BA834B2A86875 /* Core */,
 				586D8AB985A610CCAD84F939 /* GitLab */,
@@ -229,6 +234,7 @@
 			isa = PBXGroup;
 			children = (
 				B943D9F4E44D59D95B7D560E /* AppConfig.swift */,
+				D90471C48D5D38F100FBE61A /* BrandMark.swift */,
 				464C7BE24CC53E4C9E2EDA36 /* HTTP.swift */,
 				11F93D4596513BF71DB6A799 /* JSONValue.swift */,
 				65C65BC488C6366A004CC199 /* Theme.swift */,
@@ -261,6 +267,14 @@
 				0A74842AE5B0D67373120C0F /* WhiteboardViews.swift */,
 			);
 			path = Whiteboard;
+			sourceTree = "<group>";
+		};
+		C9C3F8957FC9D3C7E0EE7B1A /* Airtable */ = {
+			isa = PBXGroup;
+			children = (
+				EEF8C4FFEF374DB3074ACDF4 /* Airtable.swift */,
+			);
+			path = Airtable;
 			sourceTree = "<group>";
 		};
 		D778AF0A90202525879646E8 /* NocoDB */ = {
@@ -400,9 +414,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				08F195A7719FCAC959F147C0 /* AI.swift in Sources */,
+				2DE30E4AC66296FE2F559206 /* Airtable.swift in Sources */,
 				85127AE335187DC378BCE218 /* AlertsView.swift in Sources */,
 				4FA4322180E23DEC0DF05D77 /* AppConfig.swift in Sources */,
 				1C3B6313FA07B71C7F8D7D48 /* AskSheet.swift in Sources */,
+				2943A1DCB037D04DAD0E35E0 /* BrandMark.swift in Sources */,
 				C1DD0C0283CC74A93C2E7A63 /* BringDataView.swift in Sources */,
 				285011AB16A4B7862782F355 /* CommandBar.swift in Sources */,
 				8DC7C74DC6C346B46468D894 /* Excalidraw.swift in Sources */,

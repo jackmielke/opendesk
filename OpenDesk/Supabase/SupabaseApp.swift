@@ -15,15 +15,52 @@ final class SupabaseApp {
     var tables: [SBTable] = []
     var needsHelper = false
 
+    // Admin mode: a Supabase access token (supabase.com/dashboard/account/tokens) + a chosen project.
+    var accessToken: String { didSet { SecretStore.set(accessToken, for: "supabase-pat") } }
+    var adminKey: String { didSet { SecretStore.set(adminKey, for: "supabase-admin-key") } }
+    var projectName: String { didSet { UserDefaults.standard.set(projectName, forKey: "sbProjectName") } }
+    var isAdmin: Bool { !adminKey.isEmpty }
+
     init() {
         // Defaults to the OpenDesk demo project so the flow can be tried with the demo accounts; swap in your own.
         url = UserDefaults.standard.string(forKey: "sbAppURL") ?? SupabaseConfig.url
         key = UserDefaults.standard.string(forKey: "sbAppKey") ?? SupabaseConfig.publishableKey
         session = AppKeychain.load()
+        accessToken = SecretStore.get("supabase-pat") ?? ""
+        adminKey = SecretStore.get("supabase-admin-key") ?? ""
+        projectName = UserDefaults.standard.string(forKey: "sbProjectName") ?? ""
+    }
+
+    struct Project: Identifiable, Hashable { let id: String; let name: String; let region: String; let status: String }
+
+    private var mgmt: [String: String] { ["Authorization": "Bearer \(accessToken)"] }
+
+    func projects() async throws -> [Project] {
+        try await HTTP.json(JSONValue.self, "https://api.supabase.com/v1/projects", headers: mgmt).array.map {
+            Project(id: $0["id"]?.string ?? $0["ref"]?.string ?? "", name: $0["name"]?.string ?? "", region: $0["region"]?.string ?? "", status: $0["status"]?.string ?? "")
+        }
+    }
+
+    /// Admin mode: fetch the project's secret key and point the data browser at it. Bypasses RLS by design.
+    func use(_ p: Project) async throws {
+        let keys = try await HTTP.json(JSONValue.self, "https://api.supabase.com/v1/projects/\(p.id)/api-keys?reveal=true", headers: mgmt).array
+        let secret = keys.first { $0["type"]?.string == "secret" }?["api_key"]?.string
+            ?? keys.first { $0["name"]?.string == "service_role" }?["api_key"]?.string
+        guard let secret else { throw APIError.status(0, "Couldn't read this project's keys. Is the token from an owner or admin?") }
+        url = "https://\(p.id).supabase.co"
+        key = keys.first { $0["type"]?.string == "publishable" }?["api_key"]?.string ?? keys.first { $0["name"]?.string == "anon" }?["api_key"]?.string ?? ""
+        adminKey = secret
+        projectName = p.name
+        session = nil
+        try await loadSchema()
+    }
+
+    func disconnectAdmin() {
+        accessToken = ""; adminKey = ""; projectName = ""; tables = []
     }
 
     var isConfigured: Bool { !url.isEmpty && !key.isEmpty }
-    var projectRef: String { URL(string: url)?.host?.split(separator: ".").first.map(String.init) ?? "Supabase" }
+    var projectRef: String { projectName.isEmpty ? (URL(string: url)?.host?.split(separator: ".").first.map(String.init) ?? "Supabase") : projectName }
 
     static let helperSQL = """
     -- Run once in your Supabase SQL editor. Lists only the tables the signed-in user can read.
@@ -75,6 +112,11 @@ final class SupabaseApp {
     }
 
     func headers(_ extra: [String: String] = [:]) async throws -> [String: String] {
+        if isAdmin {
+            var h = ["apikey": adminKey]
+            if adminKey.hasPrefix("eyJ") { h["Authorization"] = "Bearer \(adminKey)" }
+            return h.merging(extra) { $1 }
+        }
         var h = ["apikey": key]
         if let t = try await bearer() { h["Authorization"] = "Bearer \(t)" }
         return h.merging(extra) { $1 }
@@ -83,6 +125,19 @@ final class SupabaseApp {
     // MARK: Schema
 
     func loadSchema() async throws {
+        if isAdmin && !accessToken.isEmpty {
+            // Admins don't need the helper function: read the catalog through the Management API.
+            let ref = URL(string: url)?.host?.split(separator: ".").first.map(String.init) ?? ""
+            let sql = Self.helperSQL.components(separatedBy: "as $$")[1].components(separatedBy: "$$;")[0]
+                .replacingOccurrences(of: " and has_table_privilege(c.oid, 'SELECT')", with: "")
+                .trimmingCharacters(in: .whitespacesAndNewlines).trimmingCharacters(in: CharacterSet(charactersIn: ";"))
+            let j = try await HTTP.json(JSONValue.self, "https://api.supabase.com/v1/projects/\(ref)/database/query", method: "POST",
+                                        headers: mgmt, body: ["query": "select (" + sql + ") as schema"])
+            let schema = j[0]?["schema"] ?? .array([])
+            tables = schema.array.map(SBTable.init).filter { !$0.columns.isEmpty }
+            needsHelper = false
+            return
+        }
         do {
             let j = try await HTTP.json(JSONValue.self, url.trimmedSlash + "/rest/v1/rpc/opendesk_schema", method: "POST",
                                         headers: try await headers(), body: [String: String]())
