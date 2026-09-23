@@ -13,6 +13,7 @@ Built at an AI enterprise hackathon in Palo Alto, September 2026.
 | **Code** | GitLab `/api/v4` | Pinned OSS projects · MRs, issues, pipelines · CI health strip · diffs by file · job stages · comment, approve and retry with a token |
 | **Home** | all three | Cross-tool snapshot: pipeline value, a live Grafana signal and CI health · "Brief me" |
 | **Widget** | NocoDB | Home and lock screen widget with pipeline value and the next booked events |
+| **Siri** | NocoDB, Grafana | "What's booked next in OpenDesk", "How's the pipeline in OpenDesk", "What's firing in OpenDesk" |
 
 ### AI, private by default
 
@@ -63,6 +64,5 @@ scripts/      seed_nocodb.py, make_icon.swift
 
 - Grafana alerting inbox with push (Alertmanager webhook → APNs), acknowledge/silence from the lock screen
 - NocoDB offline cache + background sync
-- Siri / App Intents: "Hey Siri, what's booked this week?"
 - More connectors on the same pattern: Metabase, Twenty, Plane, Zammad, Uptime Kuma
 - Upstream: contribute the NocoDB and Grafana clients as standalone Swift packages

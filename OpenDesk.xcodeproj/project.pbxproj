@@ -25,6 +25,7 @@
 		76AA07710F8C0A8CF23737FD /* LocalDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6A8E8EA4FD2B351B79693EEC /* LocalDefaults.plist */; };
 		7D6215D0B06C3856A0E48BB3 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C65BC488C6366A004CC199 /* Theme.swift */; };
 		85127AE335187DC378BCE218 /* AlertsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6C69B5EC75EB25B0B3039D /* AlertsView.swift */; };
+		87F2A7BAD2B32B7E266C1F17 /* Shortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2FA5532700E20527B4AAE9 /* Shortcuts.swift */; };
 		91B89CB78C35B9F4FFD1A192 /* GitLabViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFFA22618AF73EF5F6BA5D24 /* GitLabViews.swift */; };
 		A0C3AA1BD5B4814F57CDB78D /* NocoClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DE6DC12C30D8303241F1B3 /* NocoClient.swift */; };
 		A37042C17A171EB77E0E57FE /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435F6619CC32091B838C88C7 /* SettingsView.swift */; };
@@ -72,6 +73,7 @@
 		43DD232A1E963F5D68877EE3 /* OpenDeskApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenDeskApp.swift; sourceTree = "<group>"; };
 		464C7BE24CC53E4C9E2EDA36 /* HTTP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTP.swift; sourceTree = "<group>"; };
 		65C65BC488C6366A004CC199 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		6A2FA5532700E20527B4AAE9 /* Shortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shortcuts.swift; sourceTree = "<group>"; };
 		6A8E8EA4FD2B351B79693EEC /* LocalDefaults.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = LocalDefaults.plist; sourceTree = "<group>"; };
 		7194DC5C64C718E6D0365616 /* GitLabClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitLabClient.swift; sourceTree = "<group>"; };
 		8B9B2BE85D4DBD915DD4A459 /* NocoViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NocoViews.swift; sourceTree = "<group>"; };
@@ -171,6 +173,7 @@
 			isa = PBXGroup;
 			children = (
 				43DD232A1E963F5D68877EE3 /* OpenDeskApp.swift */,
+				6A2FA5532700E20527B4AAE9 /* Shortcuts.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -340,6 +343,7 @@
 				101A4E7E1C260AD51868F08F /* OpenDeskApp.swift in Sources */,
 				6FE7B811FDF7CEAB7CA8B17B /* RecordEditor.swift in Sources */,
 				A37042C17A171EB77E0E57FE /* SettingsView.swift in Sources */,
+				87F2A7BAD2B32B7E266C1F17 /* Shortcuts.swift in Sources */,
 				7D6215D0B06C3856A0E48BB3 /* Theme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
