@@ -36,6 +36,13 @@ struct SettingsView: View {
                 }
 
                 Section {
+                    TextField("http://192.168.1.10:3000", text: $config.metabaseURL).keyboardType(.URL).textInputAutocapitalization(.never).autocorrectionDisabled()
+                    SecureField("API key", text: $config.metabaseKey)
+                } header: { Label("Metabase", systemImage: "chart.pie.fill") } footer: {
+                    Text("Create one under Admin → Settings → Authentication → API keys.")
+                }
+
+                Section {
                     LabeledContent("On-device model", value: AI.onDeviceStatus)
                     SecureField("Anthropic API key (optional)", text: $config.anthropicKey)
                 } header: { Label("AI", systemImage: "sparkles") } footer: {

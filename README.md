@@ -1,6 +1,6 @@
 # OpenDesk
 
-A native iOS app for the self-hosted, open-source tools companies already run: **NocoDB** (no-code database / CRM), **Grafana** (dashboards) and **GitLab** (code, merge requests, CI). None of the three ships an official mobile app for this. OpenDesk is one SwiftUI app that talks to each tool's existing REST API. There is no backend of its own and nothing to migrate.
+A native iOS app for the self-hosted, open-source tools companies already run: **NocoDB** (no-code database / CRM), **Grafana** (dashboards), **Metabase** (BI) and **GitLab** (code, merge requests, CI). None of them ships an official mobile app for this. OpenDesk is one SwiftUI app that talks to each tool's existing REST API. There is no backend of its own and nothing to migrate.
 
 Built at an AI enterprise hackathon in Palo Alto, September 2026.
 
@@ -16,6 +16,7 @@ Built at an AI enterprise hackathon in Palo Alto, September 2026.
 <img src="docs/screenshots/project.jpg" width="200" alt="GitLab project">
 <img src="docs/screenshots/mr.jpg" width="200" alt="MR AI brief">
 </p>
+<p><img src="docs/screenshots/metabase.jpg" width="200" alt="Metabase dashboard"></p>
 
 ## What it does
 
@@ -23,6 +24,7 @@ Built at an AI enterprise hackathon in Palo Alto, September 2026.
 |---|---|---|
 | **Tables** | NocoDB `/api/v2` | Browse bases and tables · list, **drag-and-drop Kanban** on any single-select field, **Insights** charts · typed record editor (select chips, dates, ratings, call/email) · create and delete rows |
 | **Dashboards** | Grafana `/api/search`, `/api/dashboards`, `/api/ds/query`, `/render` | Dashboards redrawn as **native Swift Charts** from raw datasource queries, with a server-rendered PNG fallback · 1h/6h/24h/7d ranges · 15s live refresh · scrub for values |
+| **Analytics** | Metabase `/api/search`, `/api/dashboard`, dashcard query | Dashboards with tabs, every question re-rendered natively: scalars with trend, line/area/bar/row with breakouts, pie, funnel, scatter, tables · AI takeaways |
 | **Code** | GitLab `/api/v4` | Pinned OSS projects · MRs, issues, pipelines · CI health strip · diffs by file · job stages · comment, approve and retry with a token |
 | **Home** | all three | Cross-tool snapshot: pipeline value, a live Grafana signal and CI health · "Brief me" |
 | **Widget** | NocoDB | Home and lock screen widget with pipeline value and the next booked events |
@@ -49,6 +51,10 @@ docker run -d --name nocodb -p 8080:8080 -v nocodb_data:/usr/app/data nocodb/noc
 # 2. Seed the demo catering CRM (fictional data)
 NOCO_TOKEN=... python3 scripts/seed_nocodb.py
 
+# 2b. Optional: Metabase with its sample E-commerce dashboard
+docker run -d --name metabase -p 3000:3000 metabase/metabase:latest
+# finish setup at http://localhost:3000, then Admin → Authentication → API keys
+
 # 3. Point the app at it (optional, you can also set this in the app's Settings)
 cp Config/LocalDefaults.example.plist Config/LocalDefaults.plist   # set nocoURL to your Mac's LAN IP
 
@@ -68,6 +74,7 @@ OpenDesk/
   NocoDB/     client, table/board/insights views, record editor, AI command bar
   Grafana/    client (search, dashboard JSON, ds/query → Series), dashboard + panel views
   GitLab/     client, project/MR/issue/pipeline/diff views
+  Metabase/   client (dashboards, tabs, dashcard queries), native card renderers
   AI/         engine switch (on-device ⇄ Claude), AskSheet chat, edit planning
   Home/       cross-tool home, settings
 OpenDeskWidget/   WidgetKit pipeline widget
@@ -77,5 +84,5 @@ scripts/      seed_nocodb.py, make_icon.swift
 ## Roadmap ideas
 
 - Grafana alerting inbox with push (Alertmanager webhook → APNs), acknowledge/silence from the lock screen
-- More connectors on the same pattern: Metabase, Twenty, Plane, Zammad, Uptime Kuma
+- More connectors on the same pattern: Twenty, Plane, Zammad, Uptime Kuma
 - Upstream: contribute the NocoDB and Grafana clients as standalone Swift packages

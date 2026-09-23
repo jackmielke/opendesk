@@ -10,6 +10,7 @@ struct HomeView: View {
     @State private var nocoOK: Bool?
     @State private var grafanaOK: Bool?
     @State private var gitlabOK: Bool?
+    @State private var metabaseOK: Bool?
     @State private var pulse: [Series] = []
     @State private var mrs: [GLItem] = []
     @State private var pipelines: [GLPipeline] = []
@@ -56,10 +57,11 @@ struct HomeView: View {
     // MARK: Sections
 
     private var connectors: some View {
-        HStack(spacing: 10) {
+        HStack(spacing: 8) {
             connector("NocoDB", "tablecells.fill", Brand.noco, nocoOK, cached: Connectivity.shared.nocoOffline) { tab = .tables }
             connector("Grafana", "chart.xyaxis.line", Brand.grafana, grafanaOK) { tab = .dashboards }
             connector("GitLab", "chevron.left.forwardslash.chevron.right", Brand.gitlab, gitlabOK) { tab = .code }
+            connector("Metabase", "chart.pie.fill", Brand.metabase, metabaseOK) { tab = .analytics }
         }
     }
 
@@ -71,11 +73,11 @@ struct HomeView: View {
                     Spacer()
                     Circle().fill(ok == nil ? Color.gray : cached ? .orange : ok! ? .green : .red).frame(width: 7)
                 }
-                Text(name).font(.subheadline.weight(.semibold))
+                Text(name).font(.caption.weight(.semibold)).lineLimit(1).minimumScaleFactor(0.8)
                 Text(ok == nil ? "Connecting" : cached ? "Cached" : ok! ? "Live" : "Offline").font(.caption2).foregroundStyle(.secondary)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            .card(padding: 12)
+            .card(padding: 10)
         }
         .buttonStyle(.plain)
     }
@@ -214,7 +216,8 @@ struct HomeView: View {
         async let n: Void = loadNoco()
         async let g: Void = loadGrafana()
         async let l: Void = loadGitLab()
-        _ = await (n, g, l)
+        async let m: Void = loadMetabase()
+        _ = await (n, g, l, m)
     }
 
     private func loadNoco() async {
@@ -250,6 +253,10 @@ struct HomeView: View {
         }
     }
 
+    private func loadMetabase() async {
+        metabaseOK = (try? await config.metabase.dashboards()) != nil
+    }
+
     private func loadGitLab() async {
         let gl = config.gitlab
         guard let path = config.pinnedProjects.first, let p = try? await gl.project(path) else { gitlabOK = false; return }
@@ -262,7 +269,7 @@ struct HomeView: View {
     }
 
     private func briefContext() -> String {
-        var lines = ["TODAY: \(Date().formatted(date: .complete, time: .shortened))"]
+        var lines = ["TODAY: \(Date().formatted(date: .complete, time: .shortened)). Cover all three sources below: the catering pipeline first, then metrics, then code."]
         if !pipeline.isEmpty {
             lines.append("CATERING PIPELINE (NocoDB Events): Event | Client | Date | Guests | Stage | Budget | Notes")
             let soon = pipeline.sorted { ($0["Date"]?.string ?? "") < ($1["Date"]?.string ?? "") }

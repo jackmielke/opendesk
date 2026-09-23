@@ -31,9 +31,11 @@
 		A0C3AA1BD5B4814F57CDB78D /* NocoClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DE6DC12C30D8303241F1B3 /* NocoClient.swift */; };
 		A37042C17A171EB77E0E57FE /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435F6619CC32091B838C88C7 /* SettingsView.swift */; };
 		A477BC3E2168E6917AA936AC /* JSONValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F93D4596513BF71DB6A799 /* JSONValue.swift */; };
+		AC9ED3AE71EA13184368CD6D /* MetabaseViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DEE9EB775F8EE1A56F8DF1B /* MetabaseViews.swift */; };
 		B82653BB985F9A7F2F305BB6 /* GitLabClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7194DC5C64C718E6D0365616 /* GitLabClient.swift */; };
 		C0EBFA4B787FF7225A6A8CD0 /* NocoClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DE6DC12C30D8303241F1B3 /* NocoClient.swift */; };
 		E8E408F3B577CF1F59821E33 /* HTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464C7BE24CC53E4C9E2EDA36 /* HTTP.swift */; };
+		EAED8A5E794C895B84ED86B3 /* MetabaseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0BB8DD0220AC511222157F2 /* MetabaseClient.swift */; };
 		F83108D491A29939F51C2519 /* GrafanaViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CDC1B059647E6A53EB5375 /* GrafanaViews.swift */; };
 /* End PBXBuildFile section */
 
@@ -68,6 +70,7 @@
 		18A82EE78C82A27B8DFC03E7 /* CommandBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandBar.swift; sourceTree = "<group>"; };
 		1F4FA33E23AAE61EE1EF2649 /* AskSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskSheet.swift; sourceTree = "<group>"; };
 		2C6C69B5EC75EB25B0B3039D /* AlertsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertsView.swift; sourceTree = "<group>"; };
+		2DEE9EB775F8EE1A56F8DF1B /* MetabaseViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetabaseViews.swift; sourceTree = "<group>"; };
 		2EE7A1BEC9203C56CC5F7780 /* OpenDeskWidget.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = OpenDeskWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		32CDC1B059647E6A53EB5375 /* GrafanaViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrafanaViews.swift; sourceTree = "<group>"; };
 		435F6619CC32091B838C88C7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -84,6 +87,7 @@
 		B0F4CE1974B39E5A92222335 /* RecordEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordEditor.swift; sourceTree = "<group>"; };
 		B1518D065C6C7116605A66B8 /* OpenDesk.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = OpenDesk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B943D9F4E44D59D95B7D560E /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
+		C0BB8DD0220AC511222157F2 /* MetabaseClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetabaseClient.swift; sourceTree = "<group>"; };
 		CE22F08AA322BBB5ACF0C742 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		DFFA22618AF73EF5F6BA5D24 /* GitLabViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitLabViews.swift; sourceTree = "<group>"; };
 		E2DE6DC12C30D8303241F1B3 /* NocoClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NocoClient.swift; sourceTree = "<group>"; };
@@ -158,6 +162,7 @@
 				586D8AB985A610CCAD84F939 /* GitLab */,
 				1C0041EF25CE38AA6B9ACACD /* Grafana */,
 				77761519F37E1C95061316EF /* Home */,
+				EDCEC7FCC60B5C7D32ECC4EB /* Metabase */,
 				D778AF0A90202525879646E8 /* NocoDB */,
 			);
 			path = OpenDesk;
@@ -211,6 +216,15 @@
 				B0F4CE1974B39E5A92222335 /* RecordEditor.swift */,
 			);
 			path = NocoDB;
+			sourceTree = "<group>";
+		};
+		EDCEC7FCC60B5C7D32ECC4EB /* Metabase */ = {
+			isa = PBXGroup;
+			children = (
+				C0BB8DD0220AC511222157F2 /* MetabaseClient.swift */,
+				2DEE9EB775F8EE1A56F8DF1B /* MetabaseViews.swift */,
+			);
+			path = Metabase;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -341,6 +355,8 @@
 				E8E408F3B577CF1F59821E33 /* HTTP.swift in Sources */,
 				3749C65A8518EC64A51BA8F3 /* HomeView.swift in Sources */,
 				A477BC3E2168E6917AA936AC /* JSONValue.swift in Sources */,
+				EAED8A5E794C895B84ED86B3 /* MetabaseClient.swift in Sources */,
+				AC9ED3AE71EA13184368CD6D /* MetabaseViews.swift in Sources */,
 				A0C3AA1BD5B4814F57CDB78D /* NocoClient.swift in Sources */,
 				7596D28CFD50FC1FBABCBC23 /* NocoViews.swift in Sources */,
 				101A4E7E1C260AD51868F08F /* OpenDeskApp.swift in Sources */,

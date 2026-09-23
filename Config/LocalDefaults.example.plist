@@ -1,12 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<!-- Copy to LocalDefaults.plist (gitignored) to prefill connection settings. Every key is optional. -->
-<plist version="1.0"><dict>
-<key>nocoURL</key><string>http://YOUR-MAC-IP:8080</string>
-<key>nocoToken</key><string>nocodb-api-token</string>
-<key>grafanaURL</key><string>https://play.grafana.org</string>
-<key>grafanaToken</key><string></string>
-<key>gitlabURL</key><string>https://gitlab.com</string>
-<key>gitlabToken</key><string></string>
-<key>anthropicKey</key><string></string>
-</dict></plist>
+<plist version="1.0">
+<dict>
+	<key>anthropicKey</key>
+	<string></string>
+	<key>gitlabToken</key>
+	<string></string>
+	<key>gitlabURL</key>
+	<string>https://gitlab.com</string>
+	<key>grafanaToken</key>
+	<string></string>
+	<key>grafanaURL</key>
+	<string>https://play.grafana.org</string>
+	<key>metabaseKey</key>
+	<string>mb_...</string>
+	<key>metabaseURL</key>
+	<string>http://YOUR-MAC-IP:3000</string>
+	<key>nocoToken</key>
+	<string>nocodb-api-token</string>
+	<key>nocoURL</key>
+	<string>http://YOUR-MAC-IP:8080</string>
+</dict>
+</plist>

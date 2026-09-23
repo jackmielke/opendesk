@@ -11,6 +11,8 @@ final class AppConfig {
     var gitlabURL: String { didSet { save("gitlabURL", gitlabURL) } }
     var gitlabToken: String { didSet { save("gitlabToken", gitlabToken) } }
     var anthropicKey: String { didSet { save("anthropicKey", anthropicKey) } }
+    var metabaseURL: String { didSet { save("metabaseURL", metabaseURL) } }
+    var metabaseKey: String { didSet { save("metabaseKey", metabaseKey) } }
     var pinnedProjects: [String] { didSet { UserDefaults.standard.set(pinnedProjects, forKey: "pinnedProjects") } }
 
     static let defaultProjects = [
@@ -34,6 +36,8 @@ final class AppConfig {
         gitlabURL = load("gitlabURL", "https://gitlab.com")
         gitlabToken = load("gitlabToken", "")
         anthropicKey = load("anthropicKey", "")
+        metabaseURL = load("metabaseURL", "http://localhost:3000")
+        metabaseKey = load("metabaseKey", "")
         pinnedProjects = UserDefaults.standard.stringArray(forKey: "pinnedProjects") ?? Self.defaultProjects
     }
 
@@ -44,4 +48,5 @@ final class AppConfig {
     var noco: NocoClient { NocoClient(baseURL: nocoURL.trimmedSlash, token: nocoToken) }
     var grafana: GrafanaClient { GrafanaClient(baseURL: grafanaURL.trimmedSlash, token: grafanaToken) }
     var gitlab: GitLabClient { GitLabClient(baseURL: gitlabURL.trimmedSlash, token: gitlabToken) }
+    var metabase: MetabaseClient { MetabaseClient(baseURL: metabaseURL.trimmedSlash, apiKey: metabaseKey) }
 }
