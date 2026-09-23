@@ -1,0 +1,439 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		08F195A7719FCAC959F147C0 /* AI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCBA00032D9E98578A6F757 /* AI.swift */; };
+		101A4E7E1C260AD51868F08F /* OpenDeskApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DD232A1E963F5D68877EE3 /* OpenDeskApp.swift */; };
+		1C3B6313FA07B71C7F8D7D48 /* AskSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4FA33E23AAE61EE1EF2649 /* AskSheet.swift */; };
+		30940D29A01E07581F268395 /* GrafanaClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093347DEA43B9ADFBC9DEDE1 /* GrafanaClient.swift */; };
+		3749C65A8518EC64A51BA8F3 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE22F08AA322BBB5ACF0C742 /* HomeView.swift */; };
+		4FA4322180E23DEC0DF05D77 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B943D9F4E44D59D95B7D560E /* AppConfig.swift */; };
+		6392F00A0D12AED4F22EFE4B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F3A42F1924C9B38EC54BADC /* Assets.xcassets */; };
+		6FE7B811FDF7CEAB7CA8B17B /* RecordEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0F4CE1974B39E5A92222335 /* RecordEditor.swift */; };
+		72629E30262269A9E5A7A600 /* LocalDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6A8E8EA4FD2B351B79693EEC /* LocalDefaults.plist */; };
+		7596D28CFD50FC1FBABCBC23 /* NocoViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B9B2BE85D4DBD915DD4A459 /* NocoViews.swift */; };
+		7D6215D0B06C3856A0E48BB3 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C65BC488C6366A004CC199 /* Theme.swift */; };
+		91B89CB78C35B9F4FFD1A192 /* GitLabViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFFA22618AF73EF5F6BA5D24 /* GitLabViews.swift */; };
+		A0C3AA1BD5B4814F57CDB78D /* NocoClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DE6DC12C30D8303241F1B3 /* NocoClient.swift */; };
+		A37042C17A171EB77E0E57FE /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435F6619CC32091B838C88C7 /* SettingsView.swift */; };
+		A477BC3E2168E6917AA936AC /* JSONValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F93D4596513BF71DB6A799 /* JSONValue.swift */; };
+		B82653BB985F9A7F2F305BB6 /* GitLabClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7194DC5C64C718E6D0365616 /* GitLabClient.swift */; };
+		E8E408F3B577CF1F59821E33 /* HTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464C7BE24CC53E4C9E2EDA36 /* HTTP.swift */; };
+		F83108D491A29939F51C2519 /* GrafanaViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CDC1B059647E6A53EB5375 /* GrafanaViews.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		093347DEA43B9ADFBC9DEDE1 /* GrafanaClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrafanaClient.swift; sourceTree = "<group>"; };
+		11F93D4596513BF71DB6A799 /* JSONValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONValue.swift; sourceTree = "<group>"; };
+		1F4FA33E23AAE61EE1EF2649 /* AskSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskSheet.swift; sourceTree = "<group>"; };
+		32CDC1B059647E6A53EB5375 /* GrafanaViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrafanaViews.swift; sourceTree = "<group>"; };
+		435F6619CC32091B838C88C7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		43DD232A1E963F5D68877EE3 /* OpenDeskApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenDeskApp.swift; sourceTree = "<group>"; };
+		464C7BE24CC53E4C9E2EDA36 /* HTTP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTP.swift; sourceTree = "<group>"; };
+		65C65BC488C6366A004CC199 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		6A8E8EA4FD2B351B79693EEC /* LocalDefaults.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = LocalDefaults.plist; sourceTree = "<group>"; };
+		7194DC5C64C718E6D0365616 /* GitLabClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitLabClient.swift; sourceTree = "<group>"; };
+		8B9B2BE85D4DBD915DD4A459 /* NocoViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NocoViews.swift; sourceTree = "<group>"; };
+		8CFCBB0A615E0CF0D5A014B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		9F3A42F1924C9B38EC54BADC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B0F4CE1974B39E5A92222335 /* RecordEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordEditor.swift; sourceTree = "<group>"; };
+		B1518D065C6C7116605A66B8 /* OpenDesk.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = OpenDesk.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B943D9F4E44D59D95B7D560E /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
+		CE22F08AA322BBB5ACF0C742 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		DFFA22618AF73EF5F6BA5D24 /* GitLabViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitLabViews.swift; sourceTree = "<group>"; };
+		E2DE6DC12C30D8303241F1B3 /* NocoClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NocoClient.swift; sourceTree = "<group>"; };
+		FCCBA00032D9E98578A6F757 /* AI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AI.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		1C0041EF25CE38AA6B9ACACD /* Grafana */ = {
+			isa = PBXGroup;
+			children = (
+				093347DEA43B9ADFBC9DEDE1 /* GrafanaClient.swift */,
+				32CDC1B059647E6A53EB5375 /* GrafanaViews.swift */,
+			);
+			path = Grafana;
+			sourceTree = "<group>";
+		};
+		2FE15C1E6D2EE6A274D06FC5 /* AI */ = {
+			isa = PBXGroup;
+			children = (
+				FCCBA00032D9E98578A6F757 /* AI.swift */,
+				1F4FA33E23AAE61EE1EF2649 /* AskSheet.swift */,
+			);
+			path = AI;
+			sourceTree = "<group>";
+		};
+		586D8AB985A610CCAD84F939 /* GitLab */ = {
+			isa = PBXGroup;
+			children = (
+				7194DC5C64C718E6D0365616 /* GitLabClient.swift */,
+				DFFA22618AF73EF5F6BA5D24 /* GitLabViews.swift */,
+			);
+			path = GitLab;
+			sourceTree = "<group>";
+		};
+		6EB1F923E19AE8078F61BD6E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B1518D065C6C7116605A66B8 /* OpenDesk.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		736B03AEC7A05528B1191F3D /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				6A8E8EA4FD2B351B79693EEC /* LocalDefaults.plist */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
+		7590BC7AF13D1F19C132AA25 /* OpenDesk */ = {
+			isa = PBXGroup;
+			children = (
+				9F3A42F1924C9B38EC54BADC /* Assets.xcassets */,
+				8CFCBB0A615E0CF0D5A014B1 /* Info.plist */,
+				2FE15C1E6D2EE6A274D06FC5 /* AI */,
+				8D02F8519B95A758DF146BBD /* App */,
+				B23EF60A548BA834B2A86875 /* Core */,
+				586D8AB985A610CCAD84F939 /* GitLab */,
+				1C0041EF25CE38AA6B9ACACD /* Grafana */,
+				77761519F37E1C95061316EF /* Home */,
+				D778AF0A90202525879646E8 /* NocoDB */,
+			);
+			path = OpenDesk;
+			sourceTree = "<group>";
+		};
+		77761519F37E1C95061316EF /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				CE22F08AA322BBB5ACF0C742 /* HomeView.swift */,
+				435F6619CC32091B838C88C7 /* SettingsView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		8D02F8519B95A758DF146BBD /* App */ = {
+			isa = PBXGroup;
+			children = (
+				43DD232A1E963F5D68877EE3 /* OpenDeskApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		A1D3243BD0391B85BDE54E43 = {
+			isa = PBXGroup;
+			children = (
+				736B03AEC7A05528B1191F3D /* Config */,
+				7590BC7AF13D1F19C132AA25 /* OpenDesk */,
+				6EB1F923E19AE8078F61BD6E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B23EF60A548BA834B2A86875 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				B943D9F4E44D59D95B7D560E /* AppConfig.swift */,
+				464C7BE24CC53E4C9E2EDA36 /* HTTP.swift */,
+				11F93D4596513BF71DB6A799 /* JSONValue.swift */,
+				65C65BC488C6366A004CC199 /* Theme.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		D778AF0A90202525879646E8 /* NocoDB */ = {
+			isa = PBXGroup;
+			children = (
+				E2DE6DC12C30D8303241F1B3 /* NocoClient.swift */,
+				8B9B2BE85D4DBD915DD4A459 /* NocoViews.swift */,
+				B0F4CE1974B39E5A92222335 /* RecordEditor.swift */,
+			);
+			path = NocoDB;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		BE265D8CCE92D561B51AFCE1 /* OpenDesk */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DA79096735CED6141DCF32CC /* Build configuration list for PBXNativeTarget "OpenDesk" */;
+			buildPhases = (
+				FC4DB8C416DDA3F3FC485361 /* Sources */,
+				A3171474BE5BC936F47ADD1F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OpenDesk;
+			packageProductDependencies = (
+			);
+			productName = OpenDesk;
+			productReference = B1518D065C6C7116605A66B8 /* OpenDesk.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BF83BEE78A13BD7A1FA38FC6 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					BE265D8CCE92D561B51AFCE1 = {
+						DevelopmentTeam = 2A35RW57TC;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 0010060455EFAE95FAE38562 /* Build configuration list for PBXProject "OpenDesk" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = A1D3243BD0391B85BDE54E43;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 6EB1F923E19AE8078F61BD6E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BE265D8CCE92D561B51AFCE1 /* OpenDesk */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A3171474BE5BC936F47ADD1F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6392F00A0D12AED4F22EFE4B /* Assets.xcassets in Resources */,
+				72629E30262269A9E5A7A600 /* LocalDefaults.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FC4DB8C416DDA3F3FC485361 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				08F195A7719FCAC959F147C0 /* AI.swift in Sources */,
+				4FA4322180E23DEC0DF05D77 /* AppConfig.swift in Sources */,
+				1C3B6313FA07B71C7F8D7D48 /* AskSheet.swift in Sources */,
+				B82653BB985F9A7F2F305BB6 /* GitLabClient.swift in Sources */,
+				91B89CB78C35B9F4FFD1A192 /* GitLabViews.swift in Sources */,
+				30940D29A01E07581F268395 /* GrafanaClient.swift in Sources */,
+				F83108D491A29939F51C2519 /* GrafanaViews.swift in Sources */,
+				E8E408F3B577CF1F59821E33 /* HTTP.swift in Sources */,
+				3749C65A8518EC64A51BA8F3 /* HomeView.swift in Sources */,
+				A477BC3E2168E6917AA936AC /* JSONValue.swift in Sources */,
+				A0C3AA1BD5B4814F57CDB78D /* NocoClient.swift in Sources */,
+				7596D28CFD50FC1FBABCBC23 /* NocoViews.swift in Sources */,
+				101A4E7E1C260AD51868F08F /* OpenDeskApp.swift in Sources */,
+				6FE7B811FDF7CEAB7CA8B17B /* RecordEditor.swift in Sources */,
+				A37042C17A171EB77E0E57FE /* SettingsView.swift in Sources */,
+				7D6215D0B06C3856A0E48BB3 /* Theme.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		20E0807E573924C4E55C47AE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = OpenDesk/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.jackmielke.opendesk;
+				PRODUCT_NAME = OpenDesk;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		5D41E73A101802A4C4F0C849 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 2A35RW57TC;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 0.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		8BC7234FA36E319EA3B38916 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 2A35RW57TC;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 0.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		CEEBA6A96A7AE7F462CF4E3C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = OpenDesk/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.jackmielke.opendesk;
+				PRODUCT_NAME = OpenDesk;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0010060455EFAE95FAE38562 /* Build configuration list for PBXProject "OpenDesk" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8BC7234FA36E319EA3B38916 /* Debug */,
+				5D41E73A101802A4C4F0C849 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		DA79096735CED6141DCF32CC /* Build configuration list for PBXNativeTarget "OpenDesk" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				20E0807E573924C4E55C47AE /* Debug */,
+				CEEBA6A96A7AE7F462CF4E3C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BF83BEE78A13BD7A1FA38FC6 /* Project object */;
+}

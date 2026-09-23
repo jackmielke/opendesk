@@ -1,0 +1,41 @@
+name: OpenDesk
+options:
+  bundleIdPrefix: com.jackmielke
+  deploymentTarget:
+    iOS: "26.0"
+  createIntermediateGroups: true
+settings:
+  base:
+    MARKETING_VERSION: "0.1"
+    CURRENT_PROJECT_VERSION: "1"
+    SWIFT_VERSION: "5.0"
+    DEVELOPMENT_TEAM: 2A35RW57TC
+    CODE_SIGN_STYLE: Automatic
+targets:
+  OpenDesk:
+    type: application
+    platform: iOS
+    sources:
+      - path: OpenDesk
+      - path: Config/LocalDefaults.plist
+        optional: true
+        buildPhase: resources
+    info:
+      path: OpenDesk/Info.plist
+      properties:
+        CFBundleDisplayName: OpenDesk
+        UILaunchScreen: {}
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+        ITSAppUsesNonExemptEncryption: false
+        NSAppTransportSecurity:
+          NSAllowsArbitraryLoads: true
+          NSAllowsLocalNetworking: true
+        NSLocalNetworkUsageDescription: "OpenDesk connects to self-hosted NocoDB, Grafana and GitLab servers on your network."
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.jackmielke.opendesk
+        PRODUCT_NAME: OpenDesk
+        TARGETED_DEVICE_FAMILY: "1"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
