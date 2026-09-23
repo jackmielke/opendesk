@@ -104,6 +104,10 @@ extension String {
             let indent = line.prefix { $0 == " " }
             let rest = line.dropFirst(indent.count)
             if rest.hasPrefix("* ") || rest.hasPrefix("- ") { return indent + "• " + rest.dropFirst(2) }
+            if rest.hasPrefix("#") {
+                let title = rest.drop { $0 == "#" }.trimmingCharacters(in: .whitespaces)
+                if !title.isEmpty { return "**\(title)**" }
+            }
             return String(line)
         }.joined(separator: "\n")
     }
