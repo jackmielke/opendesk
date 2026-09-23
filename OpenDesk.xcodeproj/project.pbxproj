@@ -7,32 +7,64 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0697BD1D2B82E9E9D18D42D3 /* PipelineWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = E38C0AA8227B4DA9973E43EC /* PipelineWidget.swift */; };
 		08F195A7719FCAC959F147C0 /* AI.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCCBA00032D9E98578A6F757 /* AI.swift */; };
 		101A4E7E1C260AD51868F08F /* OpenDeskApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DD232A1E963F5D68877EE3 /* OpenDeskApp.swift */; };
 		1C3B6313FA07B71C7F8D7D48 /* AskSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4FA33E23AAE61EE1EF2649 /* AskSheet.swift */; };
+		27AFC5343E7DD1DD5D879E96 /* JSONValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F93D4596513BF71DB6A799 /* JSONValue.swift */; };
 		285011AB16A4B7862782F355 /* CommandBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A82EE78C82A27B8DFC03E7 /* CommandBar.swift */; };
 		30940D29A01E07581F268395 /* GrafanaClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093347DEA43B9ADFBC9DEDE1 /* GrafanaClient.swift */; };
 		3749C65A8518EC64A51BA8F3 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE22F08AA322BBB5ACF0C742 /* HomeView.swift */; };
 		4FA4322180E23DEC0DF05D77 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B943D9F4E44D59D95B7D560E /* AppConfig.swift */; };
+		5F2BDE32C8EF7749D724A0BC /* HTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464C7BE24CC53E4C9E2EDA36 /* HTTP.swift */; };
 		6392F00A0D12AED4F22EFE4B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F3A42F1924C9B38EC54BADC /* Assets.xcassets */; };
 		6FE7B811FDF7CEAB7CA8B17B /* RecordEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0F4CE1974B39E5A92222335 /* RecordEditor.swift */; };
 		72629E30262269A9E5A7A600 /* LocalDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6A8E8EA4FD2B351B79693EEC /* LocalDefaults.plist */; };
 		7596D28CFD50FC1FBABCBC23 /* NocoViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B9B2BE85D4DBD915DD4A459 /* NocoViews.swift */; };
+		7673AA3E2EFCE7F393603301 /* OpenDeskWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 2EE7A1BEC9203C56CC5F7780 /* OpenDeskWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		76AA07710F8C0A8CF23737FD /* LocalDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6A8E8EA4FD2B351B79693EEC /* LocalDefaults.plist */; };
 		7D6215D0B06C3856A0E48BB3 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C65BC488C6366A004CC199 /* Theme.swift */; };
 		91B89CB78C35B9F4FFD1A192 /* GitLabViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFFA22618AF73EF5F6BA5D24 /* GitLabViews.swift */; };
 		A0C3AA1BD5B4814F57CDB78D /* NocoClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DE6DC12C30D8303241F1B3 /* NocoClient.swift */; };
 		A37042C17A171EB77E0E57FE /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435F6619CC32091B838C88C7 /* SettingsView.swift */; };
 		A477BC3E2168E6917AA936AC /* JSONValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F93D4596513BF71DB6A799 /* JSONValue.swift */; };
 		B82653BB985F9A7F2F305BB6 /* GitLabClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7194DC5C64C718E6D0365616 /* GitLabClient.swift */; };
+		C0EBFA4B787FF7225A6A8CD0 /* NocoClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DE6DC12C30D8303241F1B3 /* NocoClient.swift */; };
 		E8E408F3B577CF1F59821E33 /* HTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464C7BE24CC53E4C9E2EDA36 /* HTTP.swift */; };
 		F83108D491A29939F51C2519 /* GrafanaViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CDC1B059647E6A53EB5375 /* GrafanaViews.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		F0AAC267F378FC9748AF3099 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BF83BEE78A13BD7A1FA38FC6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5E504712DA1F81EC2BE87294;
+			remoteInfo = OpenDeskWidget;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		4279BBDA60CB4303CA461B7B /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				7673AA3E2EFCE7F393603301 /* OpenDeskWidget.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		093347DEA43B9ADFBC9DEDE1 /* GrafanaClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrafanaClient.swift; sourceTree = "<group>"; };
+		11DA51E043472087701F036D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		11F93D4596513BF71DB6A799 /* JSONValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONValue.swift; sourceTree = "<group>"; };
 		18A82EE78C82A27B8DFC03E7 /* CommandBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandBar.swift; sourceTree = "<group>"; };
 		1F4FA33E23AAE61EE1EF2649 /* AskSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskSheet.swift; sourceTree = "<group>"; };
+		2EE7A1BEC9203C56CC5F7780 /* OpenDeskWidget.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = OpenDeskWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		32CDC1B059647E6A53EB5375 /* GrafanaViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrafanaViews.swift; sourceTree = "<group>"; };
 		435F6619CC32091B838C88C7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		43DD232A1E963F5D68877EE3 /* OpenDeskApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenDeskApp.swift; sourceTree = "<group>"; };
@@ -49,10 +81,20 @@
 		CE22F08AA322BBB5ACF0C742 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		DFFA22618AF73EF5F6BA5D24 /* GitLabViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitLabViews.swift; sourceTree = "<group>"; };
 		E2DE6DC12C30D8303241F1B3 /* NocoClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NocoClient.swift; sourceTree = "<group>"; };
+		E38C0AA8227B4DA9973E43EC /* PipelineWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipelineWidget.swift; sourceTree = "<group>"; };
 		FCCBA00032D9E98578A6F757 /* AI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
+		172EA950730CB3522F0D0597 /* OpenDeskWidget */ = {
+			isa = PBXGroup;
+			children = (
+				11DA51E043472087701F036D /* Info.plist */,
+				E38C0AA8227B4DA9973E43EC /* PipelineWidget.swift */,
+			);
+			path = OpenDeskWidget;
+			sourceTree = "<group>";
+		};
 		1C0041EF25CE38AA6B9ACACD /* Grafana */ = {
 			isa = PBXGroup;
 			children = (
@@ -84,6 +126,7 @@
 			isa = PBXGroup;
 			children = (
 				B1518D065C6C7116605A66B8 /* OpenDesk.app */,
+				2EE7A1BEC9203C56CC5F7780 /* OpenDeskWidget.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -134,6 +177,7 @@
 			children = (
 				736B03AEC7A05528B1191F3D /* Config */,
 				7590BC7AF13D1F19C132AA25 /* OpenDesk */,
+				172EA950730CB3522F0D0597 /* OpenDeskWidget */,
 				6EB1F923E19AE8078F61BD6E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -163,16 +207,36 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		5E504712DA1F81EC2BE87294 /* OpenDeskWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B831600A3584DFFB49345444 /* Build configuration list for PBXNativeTarget "OpenDeskWidget" */;
+			buildPhases = (
+				E17505D8E88B99A1A2DB451F /* Sources */,
+				9E03B54231BA93C28EE8DE20 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OpenDeskWidget;
+			packageProductDependencies = (
+			);
+			productName = OpenDeskWidget;
+			productReference = 2EE7A1BEC9203C56CC5F7780 /* OpenDeskWidget.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		BE265D8CCE92D561B51AFCE1 /* OpenDesk */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = DA79096735CED6141DCF32CC /* Build configuration list for PBXNativeTarget "OpenDesk" */;
 			buildPhases = (
 				FC4DB8C416DDA3F3FC485361 /* Sources */,
 				A3171474BE5BC936F47ADD1F /* Resources */,
+				4279BBDA60CB4303CA461B7B /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				741C134667CA3CF210298610 /* PBXTargetDependency */,
 			);
 			name = OpenDesk;
 			packageProductDependencies = (
@@ -190,6 +254,10 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
+					5E504712DA1F81EC2BE87294 = {
+						DevelopmentTeam = 2A35RW57TC;
+						ProvisioningStyle = Automatic;
+					};
 					BE265D8CCE92D561B51AFCE1 = {
 						DevelopmentTeam = 2A35RW57TC;
 						ProvisioningStyle = Automatic;
@@ -211,11 +279,20 @@
 			projectRoot = "";
 			targets = (
 				BE265D8CCE92D561B51AFCE1 /* OpenDesk */,
+				5E504712DA1F81EC2BE87294 /* OpenDeskWidget */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		9E03B54231BA93C28EE8DE20 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				76AA07710F8C0A8CF23737FD /* LocalDefaults.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A3171474BE5BC936F47ADD1F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -228,6 +305,17 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		E17505D8E88B99A1A2DB451F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5F2BDE32C8EF7749D724A0BC /* HTTP.swift in Sources */,
+				27AFC5343E7DD1DD5D879E96 /* JSONValue.swift in Sources */,
+				C0EBFA4B787FF7225A6A8CD0 /* NocoClient.swift in Sources */,
+				0697BD1D2B82E9E9D18D42D3 /* PipelineWidget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FC4DB8C416DDA3F3FC485361 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -253,6 +341,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		741C134667CA3CF210298610 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5E504712DA1F81EC2BE87294 /* OpenDeskWidget */;
+			targetProxy = F0AAC267F378FC9748AF3099 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		20E0807E573924C4E55C47AE /* Debug */ = {
@@ -399,6 +495,38 @@
 			};
 			name = Debug;
 		};
+		A1404268C6F86BE2E3E0143F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = OpenDeskWidget/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.jackmielke.opendesk.widget;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		B5366F49F01D2823354ACEBF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = OpenDeskWidget/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.jackmielke.opendesk.widget;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
 		CEEBA6A96A7AE7F462CF4E3C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -424,6 +552,15 @@
 			buildConfigurations = (
 				8BC7234FA36E319EA3B38916 /* Debug */,
 				5D41E73A101802A4C4F0C849 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		B831600A3584DFFB49345444 /* Build configuration list for PBXNativeTarget "OpenDeskWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B5366F49F01D2823354ACEBF /* Debug */,
+				A1404268C6F86BE2E3E0143F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

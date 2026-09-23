@@ -35,5 +35,13 @@ struct RootView: View {
             Tab("Code", systemImage: "chevron.left.forwardslash.chevron.right", value: .code) { GitLabHomeView().tint(Brand.gitlab) }
         }
         .tint(tint)
+        .onOpenURL { url in
+            switch url.host {
+            case "tables": tab = .tables
+            case "dashboards": tab = .dashboards
+            case "code": tab = .code
+            default: tab = .home
+            }
+        }
     }
 }
