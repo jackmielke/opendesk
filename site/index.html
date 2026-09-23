@@ -27,6 +27,11 @@
   --chip:#232040; --code:#1C2030;
 }
 *{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+#extend{scroll-margin-top:24px}
+.pill.add{border-style:dashed;color:var(--muted);text-decoration:none;background:transparent}
+.pill.add:hover{color:var(--ink);border-color:var(--ink)}
 body{background:var(--ground);color:var(--ink);font:16px/1.6 var(--body);padding-inline:20px;padding-block:0 64px;margin:0}
 .wrap{max-width:1080px;margin:0 auto}
 h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.1;margin:0}
@@ -144,11 +149,12 @@ footer{margin-top:60px;padding-top:18px;border-top:1px solid var(--line);color:v
       <span class="pill"><span class="dot" style="background:var(--gitlab)"></span>GitLab</span>
       <span class="pill"><span class="dot" style="background:var(--draw)"></span>Excalidraw</span>
       <span class="pill"><span class="dot" style="background:var(--ai)"></span>On-device AI</span>
+      <a class="pill add" href="#extend">+ Add yours</a>
     </div>
     <p class="lede">One native iPhone app for the self-hosted tools teams already run. Install it, point it at your data, and your whole team gets the same app. It talks straight to each tool's API: no fork of the tool, no server of ours, no migration. The AI runs on the phone.</p>
     <div class="cta">
       <a class="btn primary" href="https://github.com/jackmielke/opendesk">View on GitHub</a>
-      <a class="btn" href="#extend">Add your own tool</a>
+      <a class="btn" href="#extend">How to add your own tool ↓</a>
     </div>
     <div class="facts">
       <div><b>6</b><span>tools, one app</span></div>

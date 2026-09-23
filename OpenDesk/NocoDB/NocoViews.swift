@@ -198,13 +198,14 @@ struct TableScreen: View {
     @Environment(AppConfig.self) private var config
     @State private var model: TableModel
     @State private var mode: Mode = .list
+    @State private var pickedDefault = false
     @State private var search = ""
     @State private var groupBy: String?
     @State private var editing: NocoRecord?
     @State private var creating = false
     @State private var askAI = false
 
-    enum Mode: String, CaseIterable { case list = "List", board = "Board", insights = "Insights" }
+    enum Mode: String, CaseIterable { case agenda = "Agenda", list = "List", board = "Board", insights = "Insights" }
 
     init(table: NocoTable, source: TableSource) { _model = State(initialValue: TableModel(table: table, source: source)) }
 
@@ -234,13 +235,15 @@ struct TableScreen: View {
             }
 
             switch mode {
+            case .agenda:
+                if let roles = AgendaRoles(model: model) { AgendaView(model: model, roles: roles) { editing = $0 } } else { listView }
             case .list: listView
             case .board: boardView
             case .insights: InsightsView(model: model, groupColumn: groupColumn)
             }
         }
         .safeAreaInset(edge: .bottom) {
-            if mode != .insights && !model.columns.isEmpty { CommandBar(model: model) }
+            if mode != .insights && mode != .agenda && !model.columns.isEmpty { CommandBar(model: model) }
         }
         .navigationTitle(model.table.title)
         .navigationBarTitleDisplayMode(.inline)
@@ -259,7 +262,11 @@ struct TableScreen: View {
             }
         }
         .overlay { if model.loading && model.records.isEmpty { ProgressView() } }
-        .task { if model.columns.isEmpty { await model.load() } }
+        .task {
+            if model.columns.isEmpty { await model.load() }
+            // Tables with dates open on the Agenda: people think about events by when, not by row.
+            if !pickedDefault { pickedDefault = true; if AgendaRoles(model: model) != nil { mode = .agenda } }
+        }
         .refreshable { await model.load() }
         .sheet(item: Binding(get: { editing.map(IdentifiedRecord.init) }, set: { editing = $0?.record })) { item in
             RecordEditor(model: model, record: item.record)
@@ -273,7 +280,13 @@ struct TableScreen: View {
     }
 
     private var availableModes: [Mode] {
-        model.selectColumns.isEmpty ? [.list, .insights] : Mode.allCases
+        Mode.allCases.filter { m in
+            switch m {
+            case .agenda: return AgendaRoles(model: model) != nil
+            case .board: return !model.selectColumns.isEmpty
+            default: return true
+            }
+        }
     }
 
     private var suggestions: [String] {

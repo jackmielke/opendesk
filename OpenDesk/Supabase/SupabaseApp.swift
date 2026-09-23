@@ -96,7 +96,7 @@ final class SupabaseApp {
                           userId: j["user"]?["id"]?.string ?? "", email: j["user"]?["email"]?.string ?? email)
     }
 
-    func signOut() { session = nil; tables = [] }
+    func signOut() { session = nil; tables = []; LiveUpdates.shared.stop() }
 
     private func bearer() async throws -> String? {
         guard var s = session else { return nil }
@@ -136,6 +136,7 @@ final class SupabaseApp {
             let schema = j[0]?["schema"] ?? .array([])
             tables = schema.array.map(SBTable.init).filter { !$0.columns.isEmpty }
             needsHelper = false
+            Task { await LiveUpdates.shared.start() }
             return
         }
         do {
@@ -143,6 +144,7 @@ final class SupabaseApp {
                                         headers: try await headers(), body: [String: String]())
             tables = j.array.map(SBTable.init).filter { !$0.columns.isEmpty && !$0.name.hasPrefix("team_") && $0.name != "teams" }
             needsHelper = false
+            Task { await LiveUpdates.shared.start() }
         } catch APIError.status(let code, _) where code == 404 {
             needsHelper = true
             throw APIError.status(404, "This project needs the one-time OpenDesk helper. Copy the SQL below into the Supabase SQL editor.")
