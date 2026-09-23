@@ -156,6 +156,9 @@ struct TableScreen: View {
             case .insights: InsightsView(model: model, groupColumn: groupColumn)
             }
         }
+        .safeAreaInset(edge: .bottom) {
+            if mode != .insights && !model.columns.isEmpty { CommandBar(model: model) }
+        }
         .navigationTitle(model.table.title)
         .navigationBarTitleDisplayMode(.inline)
         .searchable(text: $search, placement: .navigationBarDrawer(displayMode: .automatic))
@@ -288,7 +291,7 @@ struct BoardLane: View {
             }
         }
         .padding(10)
-        .frame(width: 290)
+        .frame(width: 272)
         .background(targeted ? color.opacity(0.15) : Brand.card, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
         .overlay(RoundedRectangle(cornerRadius: 18, style: .continuous).stroke(targeted ? color : Brand.stroke))
         .dropDestination(for: String.self) { ids, _ in
@@ -397,7 +400,7 @@ struct InsightsView: View {
                         let values = model.records.compactMap { $0[c.title]?.double }
                         let total = values.reduce(0, +)
                         stat(c.uidt == "Currency" ? "Total \(c.title)" : "Avg \(c.title)",
-                             c.uidt == "Currency" ? total.currency : (values.isEmpty ? "–" : (total / Double(values.count)).compact),
+                             c.uidt == "Currency" ? total.currency : (values.isEmpty ? "–" : String(format: "%.0f", total / Double(values.count))),
                              c.icon)
                     }
                 }

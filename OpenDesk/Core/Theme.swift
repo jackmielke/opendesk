@@ -96,3 +96,15 @@ func relativeDate(_ iso: String?) -> String {
     guard let d else { return iso }
     return d.formatted(.relative(presentation: .named))
 }
+
+extension String {
+    /// Inline-only Markdown can't render lists; turn list markers into bullets so they don't show as raw asterisks.
+    var bulleted: String {
+        split(separator: "\n", omittingEmptySubsequences: false).map { line -> String in
+            let indent = line.prefix { $0 == " " }
+            let rest = line.dropFirst(indent.count)
+            if rest.hasPrefix("* ") || rest.hasPrefix("- ") { return indent + "• " + rest.dropFirst(2) }
+            return String(line)
+        }.joined(separator: "\n")
+    }
+}

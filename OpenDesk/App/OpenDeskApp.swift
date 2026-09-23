@@ -9,7 +9,6 @@ struct OpenDeskApp: App {
             RootView()
                 .environment(config)
                 .preferredColorScheme(.dark)
-                .tint(Brand.noco)
         }
     }
 }
@@ -19,12 +18,22 @@ enum RootTab: Hashable { case home, tables, dashboards, code }
 struct RootView: View {
     @State private var tab: RootTab = .home
 
+    private var tint: Color {
+        switch tab {
+        case .home: Brand.ai
+        case .tables: Brand.noco
+        case .dashboards: Brand.grafana
+        case .code: Brand.gitlab
+        }
+    }
+
     var body: some View {
         TabView(selection: $tab) {
-            Tab("Home", systemImage: "square.grid.2x2.fill", value: .home) { HomeView(tab: $tab) }
-            Tab("Tables", systemImage: "tablecells.fill", value: .tables) { NocoHomeView() }
-            Tab("Dashboards", systemImage: "chart.xyaxis.line", value: .dashboards) { GrafanaHomeView() }
-            Tab("Code", systemImage: "chevron.left.forwardslash.chevron.right", value: .code) { GitLabHomeView() }
+            Tab("Home", systemImage: "square.grid.2x2.fill", value: .home) { HomeView(tab: $tab).tint(Brand.ai) }
+            Tab("Tables", systemImage: "tablecells.fill", value: .tables) { NocoHomeView().tint(Brand.noco) }
+            Tab("Dashboards", systemImage: "chart.xyaxis.line", value: .dashboards) { GrafanaHomeView().tint(Brand.grafana) }
+            Tab("Code", systemImage: "chevron.left.forwardslash.chevron.right", value: .code) { GitLabHomeView().tint(Brand.gitlab) }
         }
+        .tint(tint)
     }
 }
