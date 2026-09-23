@@ -24,6 +24,7 @@
 		7673AA3E2EFCE7F393603301 /* OpenDeskWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 2EE7A1BEC9203C56CC5F7780 /* OpenDeskWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		76AA07710F8C0A8CF23737FD /* LocalDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6A8E8EA4FD2B351B79693EEC /* LocalDefaults.plist */; };
 		7D6215D0B06C3856A0E48BB3 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C65BC488C6366A004CC199 /* Theme.swift */; };
+		85127AE335187DC378BCE218 /* AlertsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6C69B5EC75EB25B0B3039D /* AlertsView.swift */; };
 		91B89CB78C35B9F4FFD1A192 /* GitLabViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFFA22618AF73EF5F6BA5D24 /* GitLabViews.swift */; };
 		A0C3AA1BD5B4814F57CDB78D /* NocoClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DE6DC12C30D8303241F1B3 /* NocoClient.swift */; };
 		A37042C17A171EB77E0E57FE /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435F6619CC32091B838C88C7 /* SettingsView.swift */; };
@@ -64,6 +65,7 @@
 		11F93D4596513BF71DB6A799 /* JSONValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONValue.swift; sourceTree = "<group>"; };
 		18A82EE78C82A27B8DFC03E7 /* CommandBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandBar.swift; sourceTree = "<group>"; };
 		1F4FA33E23AAE61EE1EF2649 /* AskSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskSheet.swift; sourceTree = "<group>"; };
+		2C6C69B5EC75EB25B0B3039D /* AlertsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertsView.swift; sourceTree = "<group>"; };
 		2EE7A1BEC9203C56CC5F7780 /* OpenDeskWidget.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = OpenDeskWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		32CDC1B059647E6A53EB5375 /* GrafanaViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrafanaViews.swift; sourceTree = "<group>"; };
 		435F6619CC32091B838C88C7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -98,6 +100,7 @@
 		1C0041EF25CE38AA6B9ACACD /* Grafana */ = {
 			isa = PBXGroup;
 			children = (
+				2C6C69B5EC75EB25B0B3039D /* AlertsView.swift */,
 				093347DEA43B9ADFBC9DEDE1 /* GrafanaClient.swift */,
 				32CDC1B059647E6A53EB5375 /* GrafanaViews.swift */,
 			);
@@ -321,6 +324,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				08F195A7719FCAC959F147C0 /* AI.swift in Sources */,
+				85127AE335187DC378BCE218 /* AlertsView.swift in Sources */,
 				4FA4322180E23DEC0DF05D77 /* AppConfig.swift in Sources */,
 				1C3B6313FA07B71C7F8D7D48 /* AskSheet.swift in Sources */,
 				285011AB16A4B7862782F355 /* CommandBar.swift in Sources */,

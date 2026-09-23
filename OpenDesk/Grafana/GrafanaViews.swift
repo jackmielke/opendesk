@@ -7,9 +7,26 @@ struct GrafanaHomeView: View {
     @State private var query = ""
     @State private var error: String?
     @State private var loading = true
+    @State private var section = 0
 
     var body: some View {
         NavigationStack {
+            Group {
+                if section == 1 { AlertsView() } else { dashboardList }
+            }
+            .safeAreaInset(edge: .top) {
+                Picker("", selection: $section) {
+                    Text("Dashboards").tag(0)
+                    Text("Alerts").tag(1)
+                }
+                .pickerStyle(.segmented).padding(.horizontal).padding(.bottom, 6)
+            }
+            .navigationTitle(section == 0 ? "Dashboards" : "Alerts")
+            .navigationDestination(for: GrafanaDashRef.self) { DashboardScreen(ref: $0) }
+        }
+    }
+
+    private var dashboardList: some View {
             List {
                 if let error { ErrorCard(message: error) { Task { await load() } }.listRowBackground(Color.clear) }
                 let grouped = Dictionary(grouping: dashboards) { $0.folder ?? "General" }
@@ -29,14 +46,11 @@ struct GrafanaHomeView: View {
                 }
             }
             .overlay { if loading && dashboards.isEmpty { ProgressView() } }
-            .navigationTitle("Dashboards")
-            .navigationDestination(for: GrafanaDashRef.self) { DashboardScreen(ref: $0) }
             .searchable(text: $query, prompt: "Search dashboards")
             .onSubmit(of: .search) { Task { await load() } }
             .onChange(of: query) { if query.isEmpty { Task { await load() } } }
             .refreshable { await load() }
             .task { if dashboards.isEmpty { await load() } }
-        }
     }
 
     private func load() async {

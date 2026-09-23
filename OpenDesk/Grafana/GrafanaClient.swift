@@ -158,3 +158,50 @@ struct GrafanaClient {
         return Self.parseFrames(j)
     }
 }
+
+struct GrafanaAlert: Identifiable, Hashable {
+    let id: String
+    let name: String
+    let state: String
+    let severity: String?
+    let summary: String?
+    let service: String?
+    let team: String?
+    let activeAt: String?
+    let dashboardUID: String?
+    let labels: [String: String]
+
+    init(json: JSONValue) {
+        let l = json["labels"]?.object.compactMapValues(\.string) ?? [:]
+        let a = json["annotations"]?.object.compactMapValues(\.string) ?? [:]
+        labels = l.filter { !$0.key.hasPrefix("__") }
+        name = l["alertname"] ?? "Alert"
+        state = json["state"]?.string ?? ""
+        severity = l["severity"] ?? l["grafana_slo_severity"] ?? l["priority"]
+        summary = a["summary"] ?? a["description"]
+        service = l["service_name"] ?? l["service"] ?? l["job"] ?? l["instance"]
+        team = l["team_name"] ?? l["team"]
+        activeAt = json["activeAt"]?.string
+        dashboardUID = a["__dashboardUid__"]
+        id = name + "|" + l.sorted { $0.key < $1.key }.map { "\($0.key)=\($0.value)" }.joined(separator: ",")
+    }
+
+    var isFiring: Bool { ["alerting", "firing"].contains(state.lowercased()) }
+    var isPending: Bool { state.lowercased() == "pending" }
+}
+
+extension GrafanaClient {
+    /// Active (firing or pending) Grafana-managed alert instances, most severe first.
+    func activeAlerts() async throws -> [GrafanaAlert] {
+        let j = try await HTTP.json(JSONValue.self, baseURL + "/api/prometheus/grafana/api/v1/alerts", headers: token.isEmpty ? [:] : ["Authorization": "Bearer \(token)"])
+        let rank = ["critical": 0, "high": 1, "warning": 2, "medium": 2, "info": 3, "low": 3]
+        return (j["data"]?["alerts"]?.array ?? []).map(GrafanaAlert.init)
+            .filter { $0.isFiring || $0.isPending }
+            .sorted { a, b in
+                if a.isFiring != b.isFiring { return a.isFiring }
+                let ra = rank[a.severity?.lowercased() ?? ""] ?? 4, rb = rank[b.severity?.lowercased() ?? ""] ?? 4
+                if ra != rb { return ra < rb }
+                return (a.activeAt ?? "") > (b.activeAt ?? "")
+            }
+    }
+}
