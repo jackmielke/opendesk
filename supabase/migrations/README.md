@@ -1,0 +1,1 @@
+The teams schema (teams, team_members, team_connections, RLS, create_team/join_team RPCs) was applied to the hosted project with the Supabase MCP. Migration name: `teams_and_connections`. Pull it with `supabase db pull` after `supabase link --project-ref tztzifsdirqnctayihjs`.

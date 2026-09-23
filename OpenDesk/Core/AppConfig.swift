@@ -13,6 +13,7 @@ final class AppConfig {
     var anthropicKey: String { didSet { save("anthropicKey", anthropicKey) } }
     var metabaseURL: String { didSet { save("metabaseURL", metabaseURL) } }
     var metabaseKey: String { didSet { save("metabaseKey", metabaseKey) } }
+    var onboarded: Bool { didSet { UserDefaults.standard.set(onboarded, forKey: "onboarded") } }
     var pinnedProjects: [String] { didSet { UserDefaults.standard.set(pinnedProjects, forKey: "pinnedProjects") } }
 
     static let defaultProjects = [
@@ -38,6 +39,7 @@ final class AppConfig {
         anthropicKey = load("anthropicKey", "")
         metabaseURL = load("metabaseURL", "http://localhost:3000")
         metabaseKey = load("metabaseKey", "")
+        onboarded = UserDefaults.standard.object(forKey: "onboarded") as? Bool ?? !(UserDefaults.standard.string(forKey: "nocoToken") ?? bundled["nocoToken"] ?? "").isEmpty
         pinnedProjects = UserDefaults.standard.stringArray(forKey: "pinnedProjects") ?? Self.defaultProjects
     }
 

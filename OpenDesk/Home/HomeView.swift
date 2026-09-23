@@ -16,6 +16,7 @@ struct HomeView: View {
     @State private var pipelines: [GLPipeline] = []
     @State private var gitlabProject: GLProject?
     @State private var showSettings = false
+    @State private var showTeam = false
     @State private var brief = false
 
     var body: some View {
@@ -32,6 +33,12 @@ struct HomeView: View {
             }
             .navigationTitle("OpenDesk")
             .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button { showTeam = true } label: {
+                        Label(TeamStore.shared.current?.name ?? "Team", systemImage: TeamStore.shared.isSignedIn ? "person.2.fill" : "person.2")
+                            .labelStyle(.titleAndIcon).font(.subheadline)
+                    }
+                }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button { showSettings = true } label: { Image(systemName: "gearshape") }
                 }
@@ -45,6 +52,7 @@ struct HomeView: View {
                 }
             }
             .sheet(isPresented: $showSettings, onDismiss: { Task { await load() } }) { SettingsView() }
+            .sheet(isPresented: $showTeam, onDismiss: { Task { await load() } }) { TeamView() }
             .sheet(isPresented: $brief) {
                 AskSheet(title: "Morning brief", accent: Brand.ai,
                          suggestions: ["Give me a 5-bullet brief across everything", "What should I do first today?", "Anything on fire?"]) {

@@ -192,6 +192,10 @@ enum ResponseCache {
         try? data.write(to: f, options: .atomic)
     }
 
+    static func clear() {
+        if let d = dir { try? FileManager.default.removeItem(at: d) }
+    }
+
     static func load(for key: String) -> Data? {
         file(key).flatMap { try? Data(contentsOf: $0) }
     }

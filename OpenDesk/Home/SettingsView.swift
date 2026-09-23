@@ -4,11 +4,17 @@ struct SettingsView: View {
     @Environment(AppConfig.self) private var config
     @Environment(\.dismiss) private var dismiss
     @State private var newProject = ""
+    @State private var showBring = false
+    @State private var showShare = false
 
     var body: some View {
         @Bindable var config = config
         NavigationStack {
             Form {
+                Section {
+                    Button { showBring = true } label: { Label("Bring your data: connect, import, invite", systemImage: "square.and.arrow.down.on.square") }
+                    Button { showShare = true } label: { Label("Share this setup with a teammate", systemImage: "qrcode") }
+                }
                 Section {
                     TextField("http://192.168.1.10:8080", text: $config.nocoURL).keyboardType(.URL).textInputAutocapitalization(.never).autocorrectionDisabled()
                     SecureField("API token (xc-token)", text: $config.nocoToken)
@@ -49,6 +55,8 @@ struct SettingsView: View {
                     Text("By default answers come from Apple Intelligence on this phone, so business data never leaves the device. Add a Claude key for larger context and deeper reasoning.")
                 }
             }
+            .sheet(isPresented: $showBring) { BringDataView() }
+            .sheet(isPresented: $showShare) { ShareSetupView() }
             .navigationTitle("Connections")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

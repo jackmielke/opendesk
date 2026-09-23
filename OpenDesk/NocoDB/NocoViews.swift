@@ -9,6 +9,7 @@ struct NocoHomeView: View {
     @State private var tables: [String: [NocoTable]] = [:]
     @State private var error: String?
     @State private var loading = true
+    @State private var importing = false
 
     var body: some View {
         NavigationStack {
@@ -38,6 +39,8 @@ struct NocoHomeView: View {
             }
             .overlay { if loading && bases.isEmpty { ProgressView() } }
             .navigationTitle("Tables")
+            .toolbar { Button { importing = true } label: { Image(systemName: "square.and.arrow.down") } }
+            .sheet(isPresented: $importing, onDismiss: { Task { await load() } }) { BringDataView() }
             .navigationDestination(for: NocoTable.self) { TableScreen(table: $0) }
             .refreshable { await load() }
             .task { await load() }
