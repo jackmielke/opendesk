@@ -2,7 +2,7 @@
 
 A native iOS app for the self-hosted, open-source tools companies already run: **NocoDB** (no-code database / CRM), **Grafana** (dashboards), **Metabase** (BI) and **GitLab** (code, merge requests, CI). None of them ships an official mobile app for this. OpenDesk is one SwiftUI app that talks to each tool's existing REST API. There is no backend of its own and nothing to migrate.
 
-Built at an AI enterprise hackathon in Palo Alto, September 2026.
+Built at an AI enterprise hackathon in Palo Alto, September 2026. **Site:** https://opendesk-app.vercel.app · **Add your own tool:** see [AGENTS.md](AGENTS.md).
 
 <p>
 <img src="docs/screenshots/home.jpg" width="200" alt="Home">

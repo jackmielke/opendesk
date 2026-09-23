@@ -1,0 +1,10 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Opening OpenDesk</title>
+<style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#0E1016;color:#E9EAF0;font:16px/1.5 -apple-system,system-ui,sans-serif;padding:24px;box-sizing:border-box;text-align:center}a{display:inline-block;margin-top:16px;padding:12px 20px;border-radius:12px;background:#5CCCB8;color:#0E1016;font-weight:600;text-decoration:none}p{color:#9A9DAC;max-width:32ch}</style>
+</head><body><div><h1>Signing you in…</h1><p>If OpenDesk doesn't open on its own, tap the button. You need the app installed on this iPhone.</p><a id="open" href="opendesk://auth-callback">Open OpenDesk</a></div>
+<script>
+// Supabase lands here with the session in the URL fragment; hand it to the app unchanged.
+var target = 'opendesk://auth-callback' + (location.hash || '') + (location.search || '');
+document.getElementById('open').href = target;
+location.replace(target);
+</script></body></html>

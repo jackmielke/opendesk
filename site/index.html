@@ -1,0 +1,399 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="icon" href="/icon.png"><meta property="og:title" content="OpenDesk"><meta property="og:description" content="The mobile app your open-source stack never shipped."><meta property="og:image" content="/img/home.jpg">
+<title>OpenDesk</title>
+<meta name="description" content="A native iPhone app for the open-source tools your team already runs: NocoDB, Grafana, Metabase, GitLab, Excalidraw and your own Supabase app, with private on-device AI.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --ground:#F4F4F7; --surface:#FFFFFF; --ink:#16171D; --muted:#5B5E6B; --line:#DCDDE5;
+  --noco:#5B4FE0; --grafana:#D9690A; --gitlab:#E2531A; --ai:#1D9A86; --metabase:#2F7FC8; --draw:#6965DB; --supa:#249361; --phone:#0E1016;
+  --chip:#ECEBFB; --code:#EEF0F5;
+  --display:"Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body:"IBM Plex Sans", -apple-system, "Segoe UI", system-ui, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --ground:#0E1016; --surface:#161922; --ink:#E9EAF0; --muted:#9A9DAC; --line:#272B37;
+    --noco:#8E85FA; --grafana:#F5851A; --gitlab:#FC7A3F; --ai:#5CCCB8; --metabase:#509EE3; --draw:#A8A5FF; --supa:#3ECF8E;
+    --chip:#232040; --code:#1C2030;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --ground:#0E1016; --surface:#161922; --ink:#E9EAF0; --muted:#9A9DAC; --line:#272B37;
+  --noco:#8E85FA; --grafana:#F5851A; --gitlab:#FC7A3F; --ai:#5CCCB8; --metabase:#509EE3; --draw:#A8A5FF; --supa:#3ECF8E;
+  --chip:#232040; --code:#1C2030;
+}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font:16px/1.6 var(--body);padding-inline:20px;padding-block:0 64px;margin:0}
+.wrap{max-width:1080px;margin:0 auto}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.1;margin:0}
+h2{font-size:clamp(26px,3.4vw,36px);font-weight:700;letter-spacing:-.01em}
+h3{font-size:19px;font-weight:700}
+p{margin:0}
+a{color:var(--noco)}
+code,.mono{font-family:var(--mono);font-size:.86em}
+.eyebrow{font:500 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+section{padding-block:60px 0;display:grid;gap:22px}
+.lede{max-width:66ch;color:var(--muted);font-size:17px}
+
+.hero{display:grid;grid-template-columns:1.25fr .75fr;gap:40px;align-items:center;padding-block:48px 8px}
+.hero h1{font-size:clamp(40px,6.4vw,76px);font-weight:800;letter-spacing:-.025em}
+.hero h1 .t{display:block;font-size:.42em;font-weight:500;letter-spacing:-.005em;color:var(--muted);margin-top:14px;line-height:1.2}
+.tri{display:flex;gap:8px;margin:22px 0 18px;flex-wrap:wrap}
+.pill{display:inline-flex;align-items:center;gap:7px;padding:5px 12px;border-radius:999px;font:500 13px/1.4 var(--body);border:1px solid var(--line);background:var(--surface)}
+.dot{width:8px;height:8px;border-radius:50%}
+.cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:12px;font:600 15px/1 var(--body);text-decoration:none;border:1px solid var(--line);color:var(--ink);background:var(--surface)}
+.btn.primary{background:var(--ink);color:var(--ground);border-color:var(--ink)}
+.btn:focus-visible{outline:2px solid var(--noco);outline-offset:2px}
+.facts{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);margin-top:28px}
+.facts div{padding:14px 12px 0 0}
+.facts b{display:block;font:700 26px/1.1 var(--display);font-variant-numeric:tabular-nums}
+.facts span{font-size:13px;color:var(--muted)}
+.phone{width:100%;max-width:300px;justify-self:center;border-radius:38px;padding:9px;background:var(--phone);box-shadow:0 30px 60px -30px rgba(20,20,40,.45),0 0 0 1px var(--line)}
+.phone img{display:block;border-radius:30px;width:100%}
+
+.gap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:14.5px}
+th,td{text-align:left;padding:12px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:500 12px/1.2 var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+tr:last-child td{border-bottom:0}
+.no{color:var(--gitlab);font-weight:600}
+
+.modules{display:grid;gap:44px}
+.mod{display:grid;grid-template-columns:repeat(2,minmax(0,220px)) 1fr;gap:22px;align-items:start}
+.mod.one{grid-template-columns:minmax(0,220px) 1fr}
+.shot{border-radius:26px;padding:6px;background:var(--phone);box-shadow:0 0 0 1px var(--line)}
+.shot img{display:block;border-radius:21px;width:100%}
+.mod .txt{display:grid;gap:12px;padding-top:6px}
+.tag{font:500 12px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase}
+.mod ul,.box ul{margin:0;padding-left:18px;display:grid;gap:6px}
+.mod li::marker,.box li::marker{color:var(--muted)}
+.api{font:400 12.5px/1.6 var(--mono);color:var(--muted);border-left:2px solid var(--line);padding-left:12px}
+
+.arch{display:grid;grid-template-columns:1fr auto 1.4fr;gap:18px;align-items:stretch}
+.box{border:1px solid var(--line);border-radius:14px;padding:18px;background:var(--surface);display:grid;gap:10px;align-content:start}
+.box h3{font-size:16px}
+.arrow{align-self:center;font:500 13px/1.3 var(--mono);color:var(--muted);text-align:center}
+.arrow i{display:block;font-style:normal;font-size:26px;color:var(--ink)}
+.row{display:flex;justify-content:space-between;gap:10px;font-size:14px;border-top:1px dashed var(--line);padding-top:8px}
+.row:first-of-type{border-top:0;padding-top:0}
+.row code{color:var(--muted)}
+
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line);border-radius:14px;background:var(--surface);overflow:hidden}
+.flow div{padding:16px;border-right:1px solid var(--line);display:grid;gap:6px;align-content:start}
+.flow div:last-child{border-right:0}
+.flow b{font:700 15px/1.2 var(--display)}
+.flow span{font-size:14px;color:var(--muted)}
+.flow .k{font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ai)}
+
+.prompt{border-radius:14px;background:var(--code);border:1px solid var(--line);padding:18px 20px;font:500 15px/1.6 var(--mono);display:grid;gap:10px}
+.prompt .who{font:500 11px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.steps3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+
+.script{display:grid;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.step{display:grid;grid-template-columns:52px 1fr auto;gap:14px;padding:14px 18px;border-bottom:1px solid var(--line);align-items:baseline}
+.step:last-child{border-bottom:0}
+.step .n{font:700 15px/1 var(--display);color:var(--muted);font-variant-numeric:tabular-nums}
+.step .say{color:var(--muted);font-size:14px;display:block;margin-top:2px}
+.step .sec{font:500 12px/1 var(--mono);color:var(--muted);white-space:nowrap}
+
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.cols .box ul,.cols3 .box ul{font-size:15px;gap:8px}
+.badge{justify-self:start;font:600 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:5px 8px;border-radius:6px;background:var(--chip);color:var(--ink)}
+.next{display:flex;flex-wrap:wrap;gap:8px}
+.next span{padding:6px 12px;border-radius:999px;background:var(--chip);font-size:14px}
+footer{margin-top:60px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:13px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+@media (max-width:860px){
+  .hero{grid-template-columns:1fr}
+  .phone{max-width:240px}
+  .mod,.mod.one{grid-template-columns:1fr 1fr}
+  .mod .txt{grid-column:1/-1;order:-1}
+  .arch,.cols,.cols3,.steps3{grid-template-columns:1fr}
+  .arrow i{transform:rotate(90deg)}
+  .facts{grid-template-columns:repeat(2,1fr)}
+  .flow{grid-template-columns:1fr 1fr}
+  .flow div:nth-child(2){border-right:0}
+  .flow div:nth-child(-n+2){border-bottom:1px solid var(--line)}
+}
+@media (max-width:460px){
+  .step{grid-template-columns:36px 1fr}
+  .step .sec{display:none}
+  .flow{grid-template-columns:1fr}
+  .flow div{border-right:0;border-bottom:1px solid var(--line)}
+}
+</style>
+</head><body>
+
+<div class="wrap">
+
+<header class="hero">
+  <div>
+    <p class="eyebrow">Open source · built at an AI enterprise hackathon, Palo Alto, Sept 2026</p>
+    <h1>OpenDesk<span class="t">The mobile app your open-source stack never shipped.</span></h1>
+    <div class="tri">
+      <span class="pill"><span class="dot" style="background:var(--noco)"></span>NocoDB</span>
+      <span class="pill"><span class="dot" style="background:var(--supa)"></span>Supabase</span>
+      <span class="pill"><span class="dot" style="background:var(--grafana)"></span>Grafana</span>
+      <span class="pill"><span class="dot" style="background:var(--metabase)"></span>Metabase</span>
+      <span class="pill"><span class="dot" style="background:var(--gitlab)"></span>GitLab</span>
+      <span class="pill"><span class="dot" style="background:var(--draw)"></span>Excalidraw</span>
+      <span class="pill"><span class="dot" style="background:var(--ai)"></span>On-device AI</span>
+    </div>
+    <p class="lede">One native iPhone app for the self-hosted tools teams already run. Install it, point it at your data, and your whole team gets the same app. It talks straight to each tool's API: no fork of the tool, no server of ours, no migration. The AI runs on the phone.</p>
+    <div class="cta">
+      <a class="btn primary" href="https://github.com/jackmielke/opendesk">View on GitHub</a>
+      <a class="btn" href="#extend">Add your own tool</a>
+    </div>
+    <div class="facts">
+      <div><b>6</b><span>tools, one app</span></div>
+      <div><b>0</b><span>server changes</span></div>
+      <div><b>~5.9K</b><span>lines of Swift</span></div>
+      <div><b>MIT</b><span>open source, fork it</span></div>
+    </div>
+  </div>
+  <div class="phone"><img src="img/home.jpg" alt="OpenDesk home screen: NocoDB, Grafana, GitLab and Metabase all live, a $169K sales pipeline, and a Brief me button"></div>
+</header>
+
+<section>
+  <p class="eyebrow">The gap</p>
+  <h2>Enterprise open source still lives in a desktop browser</h2>
+  <p class="lede">These tools won on self-hosting, price and control. The people who depend on them aren't always at a desk, though: the caterer at a venue walkthrough, the on-call engineer at dinner, the lead approving a merge between meetings. The web UIs technically load on a phone. Nobody wants to use them there.</p>
+  <div class="gap">
+    <table>
+      <thead><tr><th>Tool</th><th>Stands in for</th><th>Official mobile app</th><th>What people do on a phone today</th></tr></thead>
+      <tbody>
+        <tr><td><b>NocoDB</b></td><td>Airtable, a lightweight CRM</td><td class="no">None</td><td>Pinch-zoom a spreadsheet grid</td></tr>
+        <tr><td><b>Supabase apps</b></td><td>Internal admin panels</td><td class="no">Build your own</td><td>Open the dashboard's table editor, or ask an engineer</td></tr>
+        <tr><td><b>Grafana</b> (OSS)</td><td>Datadog dashboards</td><td class="no">None for dashboards</td><td>Squint at 24-column panel layouts</td></tr>
+        <tr><td><b>Metabase</b></td><td>Looker, Tableau</td><td class="no">None</td><td>Desktop dashboards squeezed onto a phone</td></tr>
+        <tr><td><b>GitLab</b></td><td>GitHub</td><td class="no">None</td><td>The desktop site in Safari</td></tr>
+        <tr><td><b>Excalidraw</b></td><td>Miro, FigJam</td><td class="no">None</td><td>A browser tab that forgets your board</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <p class="eyebrow">Day one</p>
+  <h2>Install it, and it works with the data you already have</h2>
+  <p class="lede">The hard problem isn't the charts. It's the first five minutes: getting a team's real data onto everyone's phone without an IT project. OpenDesk handles that inside the app.</p>
+  <div class="flow">
+    <div><span class="k">Connect</span><b>Your NocoDB, or your Supabase app</b><span>Paste a URL and a token, or sign in as a user of your own Supabase app.</span></div>
+    <div><span class="k">Import</span><b>Airtable or a spreadsheet</b><span>Paste an Airtable base link and NocoDB's own importer copies every table. Or pick a CSV from Files and the column types are detected for you.</span></div>
+    <div><span class="k">Team</span><b>Admins set it up once</b><span>Create a team, publish the connections, and share a 6-letter code or QR. Members sign in and get the same app.</span></div>
+    <div><span class="k">Work</span><b>Every tab fills in</b><span>Boards, charts, alerts and AI, on your real data, with your permissions.</span></div>
+  </div>
+</section>
+
+<section>
+  <p class="eyebrow">What's built</p>
+  <h2>Six tools, one app, all on live data</h2>
+  <div class="modules">
+
+    <div class="mod">
+      <div class="shot"><img src="img/board.jpg" alt="Events table as a Kanban board grouped by stage, with a dollar total per lane"></div>
+      <div class="shot"><img src="img/review.jpg" alt="Review changes sheet: Summit Bank Holiday Party, Stage Tasting to Booked, Lead Captain to Dana"></div>
+      <div class="txt">
+        <p class="tag" style="color:var(--noco)">Tables · NocoDB</p>
+        <h3>A CRM in your pocket, modeled on a real catering business</h3>
+        <ul>
+          <li>Any base: a list, a <b>drag-and-drop board</b> on any select field, and auto-built charts.</li>
+          <li>A typed editor with select chips, dates, star ratings, and tap-to-call or tap-to-email.</li>
+          <li><b>Tell it what changed.</b> Hold the mic and say <i>"Summit Bank tasting went great, book it, Dana captains."</i> You get a diff to review, and tapping Apply writes it back.</li>
+          <li>Works offline from the last sync, and says so.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mod">
+      <div class="shot"><img src="img/supabase.jpg" alt="A Supabase table, Catering Inquiries, shown as a board grouped by its Postgres enum stages"></div>
+      <div class="shot"><img src="img/insights.jpg" alt="Insights: 38 rows, $246K total budget, budget by stage chart"></div>
+      <div class="txt">
+        <p class="tag" style="color:var(--supa)">Tables · your Supabase app</p>
+        <h3>Your Supabase app's data, with your security rules</h3>
+        <ul>
+          <li>Sign in as a <b>user of your own app</b>, not an admin. The phone never holds a service key.</li>
+          <li>Every read and write carries that user's token, so <b>row-level security decides what each teammate sees</b>. The demo table is scoped per team.</li>
+          <li>Postgres types map to the same UI: enums become board lanes, and money, dates and emails get proper editors.</li>
+          <li>Setup is one read-only SQL helper that lists the tables the signed-in user can already read.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mod">
+      <div class="shot"><img src="img/dashboard.jpg" alt="Grafana Cart Service dashboard redrawn as native line charts"></div>
+      <div class="shot"><img src="img/alerts.jpg" alt="Alerts inbox: 23 firing, 1 pending, critical first, with a Triage button"></div>
+      <div class="txt">
+        <p class="tag" style="color:var(--grafana)">Dashboards · Grafana</p>
+        <h3>Charts redrawn natively, plus an on-call inbox</h3>
+        <ul>
+          <li>Each panel's query is replayed through Grafana's datasource API and drawn with <b>Swift Charts</b> you can scrub. Anything it can't replay falls back to a server-rendered image.</li>
+          <li><b>Alerts</b> shows what's firing, critical first. <b>Triage</b> asks the AI what on-call should look at first.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mod">
+      <div class="shot"><img src="img/metabase.jpg" alt="Metabase E-commerce dashboard: stacked revenue by category, orders by category lines"></div>
+      <div class="shot"><img src="img/mr.jpg" alt="GitLab merge request with an AI brief: what it does, risk, what to check"></div>
+      <div class="txt">
+        <p class="tag" style="color:var(--metabase)">Analytics · Metabase &nbsp;·&nbsp; <span style="color:var(--gitlab)">Code · GitLab</span></p>
+        <h3>BI you can read on a phone, and code review between meetings</h3>
+        <ul>
+          <li>Metabase dashboards and tabs, with every question redrawn natively: KPIs with trend, lines, stacked bars, pie, funnel, scatter and tables.</li>
+          <li>GitLab merge requests, issues, pipelines and diffs, plus a 30-run <b>CI health strip</b>. <b>Summarize this change</b> tells you what it does, how risky it is, and what to check.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mod one">
+      <div class="shot"><img src="img/whiteboard.jpg" alt="Excalidraw board generated from NocoDB: an events pipeline wall with sticky notes per stage"></div>
+      <div class="txt">
+        <p class="tag" style="color:var(--draw)">Whiteboard · Excalidraw</p>
+        <h3>Your data, drawn</h3>
+        <ul>
+          <li><b>Map my database</b> turns every NocoDB base and table into a hand-drawn entity map.</li>
+          <li><b>Pipeline wall</b> turns your deals into sticky notes, one lane per stage, ready for a planning meeting.</li>
+          <li>Full open-source Excalidraw for editing. Boards save on the phone and export as standard <code>.excalidraw</code> files.</li>
+          <li>Also on the phone: a <b>home and lock screen widget</b>, and <b>Siri</b> (<i>"What's booked next in OpenDesk?"</i>).</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section>
+  <p class="eyebrow">Teams</p>
+  <h2>Admins set it up once. Everyone gets the same app.</h2>
+  <div class="cols3">
+    <div class="box">
+      <span class="badge">Admin</span>
+      <ul>
+        <li>Creates the team and connects the tools</li>
+        <li>Publishes the connections to the team</li>
+        <li>Invites by 6-letter code, link or QR</li>
+        <li>Promotes, demotes and removes members. The last admin can't be removed.</li>
+      </ul>
+    </div>
+    <div class="box">
+      <span class="badge">Member</span>
+      <ul>
+        <li>Signs in with an email link or password</li>
+        <li>Joins with the code, and every tab fills in on launch</li>
+        <li>Sees Supabase rows their account is allowed to see</li>
+        <li>Can leave the team at any time</li>
+      </ul>
+    </div>
+    <div class="box">
+      <span class="badge">Under the hood</span>
+      <ul>
+        <li>Supabase Auth, Postgres, and row-level security on every table</li>
+        <li>Members can read the shared setup but not change it; strangers see nothing (tested)</li>
+        <li>Sessions stored in the iOS Keychain</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <p class="eyebrow">How it works</p>
+  <h2>A thin native client over APIs these tools already have</h2>
+  <div class="arch">
+    <div class="box">
+      <h3>iPhone · OpenDesk</h3>
+      <div class="row"><span>SwiftUI + Swift Charts</span><code>iOS 26</code></div>
+      <div class="row"><span>Apple Intelligence + Speech</span><code>on device</code></div>
+      <div class="row"><span>WidgetKit · App Intents</span><code>widget · Siri</code></div>
+      <div class="row"><span>Claude (optional)</span><code>bring your own key</code></div>
+    </div>
+    <div class="arrow"><i>→</i>plain REST<br>with each user's<br>own credentials</div>
+    <div class="box">
+      <h3>Your existing, unmodified servers</h3>
+      <div class="row"><span style="color:var(--noco)">NocoDB</span><code>self-hosted or cloud</code></div>
+      <div class="row"><span style="color:var(--supa)">Your Supabase app</span><code>RLS as the user</code></div>
+      <div class="row"><span style="color:var(--grafana)">Grafana</span><code>any instance</code></div>
+      <div class="row"><span style="color:var(--metabase)">Metabase</span><code>self-hosted</code></div>
+      <div class="row"><span style="color:var(--gitlab)">GitLab</span><code>.com or self-managed</code></div>
+      <div class="row"><span style="color:var(--draw)">Excalidraw</span><code>open-source web app</code></div>
+    </div>
+  </div>
+  <p class="lede">The on-device model is small, so it gets three constraints: the app narrows the table to the few rows an instruction plausibly names, passes each select column's allowed values, and lists the existing names for short-vocabulary columns. A person reviews every write.</p>
+</section>
+
+<section id="extend">
+  <p class="eyebrow">Extend it</p>
+  <h2>Your tool isn't here? Fork it and ask your coding agent.</h2>
+  <p class="lede">OpenDesk is open source, and every tool is the same small pattern: a REST client plus a couple of screens. The repo ships an <code>AGENTS.md</code> that teaches a coding agent that pattern, so adding Twenty, Plane, Zammad, Baserow or your in-house tool is a conversation, not a project.</p>
+  <div class="steps3">
+    <div class="box"><span class="badge">1</span><b>Fork the repo</b><span class="lede" style="font-size:15px"><a href="https://github.com/jackmielke/opendesk">github.com/jackmielke/opendesk</a></span></div>
+    <div class="box"><span class="badge">2</span><b>Tell your agent what you use</b><span class="lede" style="font-size:15px">Claude Code, Cursor, anything that reads the repo.</span></div>
+    <div class="box"><span class="badge">3</span><b>Build and install</b><span class="lede" style="font-size:15px">It adds the client, screens, settings, a Home tile, team sync and AI context, then checks them in the simulator.</span></div>
+  </div>
+  <div class="prompt">
+    <span class="who">You, to your coding agent</span>
+    Add an OpenDesk connector for Twenty CRM at https://crm.mycompany.com. Follow AGENTS.md.
+  </div>
+  <p class="lede">For table-shaped data it's even shorter: implement one <code>TableSource</code>, and the list, board, charts, editor and voice edits all come for free. That's how the Supabase connector was built.</p>
+</section>
+
+<section>
+  <p class="eyebrow">Demo script</p>
+  <h2>Two minutes, on stage, on a real phone</h2>
+  <div class="script">
+    <div class="step"><span class="n">1</span><div><b>Home</b>: four tools, all green.<span class="say">"Six open-source tools, none with a phone app. Now they're one app."</span></div><span class="sec">0:00</span></div>
+    <div class="step"><span class="n">2</span><div><b>Tables → Events → Board</b>. Drag a card, then hold the mic: <i>"Summit Bank tasting went great, book it, Dana captains."</i><span class="say">"This model runs on the phone. The client list never left it."</span></div><span class="sec">0:15</span></div>
+    <div class="step"><span class="n">3</span><div><b>Import</b>: AirDrop a CSV and import it. Its columns and types come through.<span class="say">"This is the day-one problem, solved in the app."</span></div><span class="sec">0:40</span></div>
+    <div class="step"><span class="n">4</span><div><b>Team</b>: show the QR. A friend scans it, signs in, and sees the same tables.<span class="say">"The admin sets it up once, and everyone gets it, with row-level security."</span></div><span class="sec">1:00</span></div>
+    <div class="step"><span class="n">5</span><div><b>Dashboards → Alerts → Triage</b>, then <b>Analytics</b>.<span class="say">"It's 2am, you're on call, and you have the answer before you find your laptop."</span></div><span class="sec">1:25</span></div>
+    <div class="step"><span class="n">6</span><div><b>Whiteboard → Pipeline wall</b>, then Siri: <i>"What's firing in OpenDesk?"</i><span class="say">"And if your tool isn't here, fork it and tell your agent."</span></div><span class="sec">1:45</span></div>
+  </div>
+</section>
+
+<section>
+  <p class="eyebrow">Why it matters</p>
+  <h2>Who it helps</h2>
+  <div class="cols">
+    <div class="box">
+      <h3>Teams on open source</h3>
+      <ul>
+        <li><b>Day one works:</b> connect, import, invite, and the whole team is on the same app.</li>
+        <li><b>Private by design:</b> AI runs on the phone, tokens stay on the device or behind row-level security, and there's no relay in between.</li>
+        <li><b>Frontline work:</b> caterers, field sales and on-call engineers get the tool where the work happens.</li>
+      </ul>
+    </div>
+    <div class="box">
+      <h3>The projects themselves</h3>
+      <ul>
+        <li><b>A mobile client for free:</b> it uses each project's public API as it is, with nothing to merge or maintain on their side.</li>
+        <li><b>Closes the gap</b> self-hosters had against SaaS tools like Airtable, Datadog and GitHub, which is a good phone app.</li>
+        <li><b>A shared pattern:</b> the clients can ship as Swift packages each project could adopt.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <p class="eyebrow">Next</p>
+  <h2>Where it goes from here</h2>
+  <div class="next">
+    <span>Push alerts from Grafana, with silence from the lock screen</span>
+    <span>Sign in with Apple</span>
+    <span>Twenty CRM, Plane and Zammad connectors</span>
+    <span>Offline edits that sync later</span>
+    <span>TestFlight, then the App Store</span>
+  </div>
+</section>
+
+<footer>
+  <span>Built in one session with Claude Code · SwiftUI, Swift Charts, WidgetKit, App Intents, Speech, FoundationModels, Supabase</span>
+  <span>The demo data is fictional</span>
+</footer>
+</div>
+</body></html>
