@@ -6,6 +6,7 @@ extension Brand {
 
 struct SupabaseConnectView: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.openURL) private var openURL
     @State private var app = SupabaseApp.shared
     @State private var mode: Mode = .admin
     @State private var token = ""
@@ -70,36 +71,71 @@ struct SupabaseConnectView: View {
 
     private var connected: Bool { !app.tables.isEmpty && (app.isAdmin || app.session != nil) }
 
+    private var cleanToken: String { token.trimmingCharacters(in: .whitespacesAndNewlines) }
+
     @ViewBuilder private var adminFlow: some View {
         if projects.isEmpty {
             Section {
-                SecureField("sbp_…", text: $token).textInputAutocapitalization(.never).autocorrectionDisabled()
-                Button { Task { await listProjects() } } label: {
-                    HStack { Text("Continue"); Spacer(); if busy == "projects" { ProgressView() } }
+                Button { openURL(URL(string: "https://supabase.com/dashboard/account/tokens")!) } label: {
+                    HStack(spacing: 12) {
+                        stepBadge(1)
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Create an access token").foregroundStyle(.primary)
+                            Text("Opens Supabase → Account → Access Tokens. Sign in with GitHub as usual, tap Generate new token, and copy it.")
+                                .font(.caption).foregroundStyle(.secondary)
+                        }
+                        Spacer()
+                        Image(systemName: "arrow.up.right.square").foregroundStyle(Brand.supabase)
+                    }
                 }
-                .disabled(!token.hasPrefix("sbp_") || busy != nil)
-            } header: { Text("1 · Access token") } footer: {
-                Text("Works however you sign in to Supabase, GitHub included. In the dashboard: Account → Access Tokens → Generate new token. It's stored in this iPhone's Keychain.")
+                HStack(spacing: 12) {
+                    stepBadge(2)
+                    SecureField("Paste token", text: $token)
+                        .textInputAutocapitalization(.never).autocorrectionDisabled()
+                        .onSubmit { Task { await listProjects() } }
+                    PasteButton(payloadType: String.self) { items in
+                        Task { @MainActor in token = items.first ?? "" }
+                    }
+                    .labelStyle(.titleOnly).buttonBorderShape(.capsule).tint(Brand.supabase)
+                }
+                Button { Task { await listProjects() } } label: {
+                    HStack {
+                        stepBadge(3)
+                        Text(cleanToken.isEmpty ? "Show my projects" : "Show my projects (\(cleanToken.prefix(4))…)")
+                        Spacer()
+                        if busy == "projects" { ProgressView() } else { Image(systemName: "arrow.right") }
+                    }
+                }
+                .disabled(cleanToken.count < 10 || busy != nil)
+            } footer: {
+                Text("The token stays in this iPhone's Keychain and is only sent to api.supabase.com.")
             }
         } else {
             Section {
                 ForEach(projects) { p in
                     Button { Task { await run(p.id) { try await app.use(p) } } } label: {
-                        HStack {
+                        HStack(spacing: 12) {
+                            BrandMark(kind: .supabase, size: 20)
                             VStack(alignment: .leading, spacing: 2) {
                                 Text(p.name).foregroundStyle(.primary)
                                 Text("\(p.region) · \(p.status.replacingOccurrences(of: "_", with: " ").lowercased())").font(.caption).foregroundStyle(.secondary)
                             }
                             Spacer()
-                            if busy == p.id { ProgressView() }
+                            if busy == p.id { ProgressView() } else { Image(systemName: "chevron.right").foregroundStyle(.tertiary) }
                         }
                     }
                     .disabled(busy != nil || !p.status.hasPrefix("ACTIVE"))
                 }
-            } header: { Text("2 · Pick a project") } footer: {
-                Text("Owner access sees every row. For teammates, use “I use the app” so your row-level security applies.")
+                Button("Use a different token") { projects = []; token = ""; app.accessToken = "" }.font(.footnote)
+            } header: { Text("Pick a project") } footer: {
+                Text("Paused projects are greyed out. Owner access sees every row; teammates should use “I use the app” so row-level security applies.")
             }
         }
+    }
+
+    private func stepBadge(_ n: Int) -> some View {
+        Text("\(n)").font(.caption.bold()).foregroundStyle(.black)
+            .frame(width: 22, height: 22).background(Brand.supabase, in: Circle())
     }
 
     @ViewBuilder private var memberFlow: some View {
@@ -121,7 +157,7 @@ struct SupabaseConnectView: View {
     }
 
     private func listProjects() async {
-        app.accessToken = token.trimmingCharacters(in: .whitespacesAndNewlines)
+        app.accessToken = cleanToken
         await run("projects") {
             projects = try await app.projects().sorted { $0.status.hasPrefix("ACTIVE") && !$1.status.hasPrefix("ACTIVE") }
             if projects.isEmpty { throw APIError.status(0, "No projects on this account.") }
@@ -133,7 +169,7 @@ struct SupabaseConnectView: View {
         busy = tag
         defer { busy = nil }
         do { try await f(); error = nil } catch {
-            if case APIError.status(401, _) = error { self.error = "Supabase didn't accept that token." }
+            if case APIError.status(401, _) = error { self.error = "Supabase didn't accept that token. Copy it again from Access Tokens (it's only shown once)." }
             else { self.error = error.localizedDescription }
         }
     }
