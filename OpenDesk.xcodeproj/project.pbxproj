@@ -18,6 +18,7 @@
 		3749C65A8518EC64A51BA8F3 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE22F08AA322BBB5ACF0C742 /* HomeView.swift */; };
 		4FA4322180E23DEC0DF05D77 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B943D9F4E44D59D95B7D560E /* AppConfig.swift */; };
 		5F2BDE32C8EF7749D724A0BC /* HTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464C7BE24CC53E4C9E2EDA36 /* HTTP.swift */; };
+		60B467DD5F91C14226679AA9 /* SupabaseConnectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6CF8ECCFFCD619642C9A5E0 /* SupabaseConnectView.swift */; };
 		6392F00A0D12AED4F22EFE4B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F3A42F1924C9B38EC54BADC /* Assets.xcassets */; };
 		6FE7B811FDF7CEAB7CA8B17B /* RecordEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0F4CE1974B39E5A92222335 /* RecordEditor.swift */; };
 		72629E30262269A9E5A7A600 /* LocalDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6A8E8EA4FD2B351B79693EEC /* LocalDefaults.plist */; };
@@ -41,6 +42,7 @@
 		E8E408F3B577CF1F59821E33 /* HTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464C7BE24CC53E4C9E2EDA36 /* HTTP.swift */; };
 		EAED8A5E794C895B84ED86B3 /* MetabaseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0BB8DD0220AC511222157F2 /* MetabaseClient.swift */; };
 		EB35CC4B6E696F0445BF60CF /* Importers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7058407FCA6F39613928A807 /* Importers.swift */; };
+		ED10EB322045E26B477E3A99 /* SupabaseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFEAD785E7C7B54A24BD7A3 /* SupabaseApp.swift */; };
 		F83108D491A29939F51C2519 /* GrafanaViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CDC1B059647E6A53EB5375 /* GrafanaViews.swift */; };
 		FD5E10D937D4C1B799F1E9CE /* Supabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2246D970E0E755B740FAFCFB /* Supabase.swift */; };
 /* End PBXBuildFile section */
@@ -95,6 +97,7 @@
 		8CFCBB0A615E0CF0D5A014B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		9F3A42F1924C9B38EC54BADC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A7962649323D45461729105F /* BringDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BringDataView.swift; sourceTree = "<group>"; };
+		AEFEAD785E7C7B54A24BD7A3 /* SupabaseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseApp.swift; sourceTree = "<group>"; };
 		B0F4CE1974B39E5A92222335 /* RecordEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordEditor.swift; sourceTree = "<group>"; };
 		B1518D065C6C7116605A66B8 /* OpenDesk.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = OpenDesk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B943D9F4E44D59D95B7D560E /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
@@ -104,6 +107,7 @@
 		E2DE6DC12C30D8303241F1B3 /* NocoClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NocoClient.swift; sourceTree = "<group>"; };
 		E38C0AA8227B4DA9973E43EC /* PipelineWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipelineWidget.swift; sourceTree = "<group>"; };
 		F6953E3E11CAE7E55289A70B /* Excalidraw.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Excalidraw.swift; sourceTree = "<group>"; };
+		F6CF8ECCFFCD619642C9A5E0 /* SupabaseConnectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseConnectView.swift; sourceTree = "<group>"; };
 		FCCBA00032D9E98578A6F757 /* AI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -177,6 +181,7 @@
 				EDCEC7FCC60B5C7D32ECC4EB /* Metabase */,
 				D778AF0A90202525879646E8 /* NocoDB */,
 				B5DB99058B90F028FD60FF79 /* Onboarding */,
+				BC45F97752BCA1A8949CA5D1 /* Supabase */,
 				9C1413D81F2C7CE830604421 /* Teams */,
 				BC6B887A5C5D5D14C90F213F /* Whiteboard */,
 			);
@@ -238,6 +243,15 @@
 				7058407FCA6F39613928A807 /* Importers.swift */,
 			);
 			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		BC45F97752BCA1A8949CA5D1 /* Supabase */ = {
+			isa = PBXGroup;
+			children = (
+				AEFEAD785E7C7B54A24BD7A3 /* SupabaseApp.swift */,
+				F6CF8ECCFFCD619642C9A5E0 /* SupabaseConnectView.swift */,
+			);
+			path = Supabase;
 			sourceTree = "<group>";
 		};
 		BC6B887A5C5D5D14C90F213F /* Whiteboard */ = {
@@ -409,6 +423,8 @@
 				A37042C17A171EB77E0E57FE /* SettingsView.swift in Sources */,
 				87F2A7BAD2B32B7E266C1F17 /* Shortcuts.swift in Sources */,
 				FD5E10D937D4C1B799F1E9CE /* Supabase.swift in Sources */,
+				ED10EB322045E26B477E3A99 /* SupabaseApp.swift in Sources */,
+				60B467DD5F91C14226679AA9 /* SupabaseConnectView.swift in Sources */,
 				DDAF501CD2B7BA3C45C704AF /* TeamView.swift in Sources */,
 				7D6215D0B06C3856A0E48BB3 /* Theme.swift in Sources */,
 				07986B0C5FCC2EC714E49309 /* VoiceInput.swift in Sources */,

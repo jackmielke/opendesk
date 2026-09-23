@@ -10,6 +10,7 @@ struct NocoHomeView: View {
     @State private var error: String?
     @State private var loading = true
     @State private var importing = false
+    @State private var showSupabase = false
 
     var body: some View {
         NavigationStack {
@@ -18,6 +19,25 @@ struct NocoHomeView: View {
                 if let error {
                     ErrorCard(message: error) { Task { await load() } }
                         .listRowBackground(Color.clear)
+                }
+                if SupabaseApp.shared.isConfigured {
+                    Section {
+                        ForEach(SupabaseApp.shared.tables) { t in
+                            NavigationLink(value: NocoTable(json: .object(["id": .string(t.name), "title": .string(t.title), "base_id": .string("supabase")]))) {
+                                Label(t.title, systemImage: "tablecells")
+                            }
+                        }
+                        if SupabaseApp.shared.tables.isEmpty {
+                            Button("Connect or load tables") { showSupabase = true }
+                        }
+                    } header: {
+                        HStack {
+                            Image(systemName: "bolt.horizontal.circle.fill").foregroundStyle(Brand.supabase)
+                            Text("Supabase · \(SupabaseApp.shared.projectRef)")
+                            Spacer()
+                            if let e = SupabaseApp.shared.session?.email { Text(e).font(.caption2).textCase(nil) }
+                        }
+                    }
                 }
                 ForEach(bases) { base in
                     Section {
@@ -39,9 +59,19 @@ struct NocoHomeView: View {
             }
             .overlay { if loading && bases.isEmpty { ProgressView() } }
             .navigationTitle("Tables")
-            .toolbar { Button { importing = true } label: { Image(systemName: "square.and.arrow.down") } }
+            .toolbar {
+                Button { showSupabase = true } label: { Image(systemName: "bolt.horizontal.circle") }
+                Button { importing = true } label: { Image(systemName: "square.and.arrow.down") }
+            }
+            .sheet(isPresented: $showSupabase) { SupabaseConnectView() }
             .sheet(isPresented: $importing, onDismiss: { Task { await load() } }) { BringDataView() }
-            .navigationDestination(for: NocoTable.self) { TableScreen(table: $0) }
+            .navigationDestination(for: NocoTable.self) { t in
+                if t.baseId == "supabase", let sb = SupabaseApp.shared.tables.first(where: { $0.name == t.id }) {
+                    TableScreen(table: t, source: SupabaseTableSource(app: SupabaseApp.shared, table: sb))
+                } else {
+                    TableScreen(table: t, source: NocoTableSource(client: config.noco, tableId: t.id))
+                }
+            }
             .refreshable { await load() }
             .task { await load() }
         }
@@ -52,6 +82,7 @@ struct NocoHomeView: View {
         defer { loading = false }
         do {
             let noco = config.noco
+            if SupabaseApp.shared.session != nil { try? await SupabaseApp.shared.loadSchema() }
             let b = try await noco.bases()
             var t: [String: [NocoTable]] = [:]
             try await withThrowingTaskGroup(of: (String, [NocoTable]).self) { group in
@@ -70,28 +101,53 @@ struct NocoHomeView: View {
 
 // MARK: - Table model
 
+/// Where a table's rows come from. NocoDB is one source; a Supabase app's tables are another.
+protocol TableSource {
+    var kind: String { get }
+    func columns() async throws -> [NocoColumn]
+    func records() async throws -> [NocoRecord]
+    func update(id: Int, fields: [String: JSONValue]) async throws
+    func create(fields: [String: JSONValue]) async throws
+    func delete(id: Int) async throws
+}
+
+struct NocoTableSource: TableSource {
+    let client: NocoClient
+    let tableId: String
+    var kind: String { "NocoDB" }
+    func columns() async throws -> [NocoColumn] { try await client.columns(tableId: tableId) }
+    func records() async throws -> [NocoRecord] { try await client.allRecords(tableId: tableId) }
+    func update(id: Int, fields: [String: JSONValue]) async throws { try await client.update(tableId: tableId, id: id, fields: fields) }
+    func create(fields: [String: JSONValue]) async throws { try await client.create(tableId: tableId, fields: fields) }
+    func delete(id: Int) async throws { try await client.delete(tableId: tableId, id: id) }
+}
+
 @Observable
 final class TableModel {
     let table: NocoTable
+    let source: TableSource
     var columns: [NocoColumn] = []
     var records: [NocoRecord] = []
     var total = 0
     var error: String?
     var loading = false
 
-    init(table: NocoTable) { self.table = table }
+    init(table: NocoTable, source: TableSource) {
+        self.table = table
+        self.source = source
+    }
 
     var visibleColumns: [NocoColumn] { columns.filter(\.isVisible) }
     var primary: NocoColumn? { columns.first(where: \.isPrimary) ?? visibleColumns.first }
     var selectColumns: [NocoColumn] { columns.filter(\.isSelect) }
     var numericColumns: [NocoColumn] { visibleColumns.filter { $0.isNumeric && $0.uidt != "Rating" } }
 
-    func load(_ client: NocoClient) async {
+    func load() async {
         loading = true
         defer { loading = false }
         do {
-            async let cols = client.columns(tableId: table.id)
-            async let rows = client.allRecords(tableId: table.id)
+            async let cols = source.columns()
+            async let rows = source.records()
             columns = try await cols
             records = try await rows
             total = records.count
@@ -101,12 +157,12 @@ final class TableModel {
         }
     }
 
-    func set(_ id: Int, _ column: String, _ value: JSONValue, client: NocoClient) async {
+    func set(_ id: Int, _ column: String, _ value: JSONValue) async {
         guard let i = records.firstIndex(where: { $0.recordId == id }) else { return }
         let old = records[i][column]
         records[i][column] = value
         do {
-            try await client.update(tableId: table.id, id: id, fields: [column: value])
+            try await source.update(id: id, fields: [column: value])
         } catch {
             records[i][column] = old
             self.error = error.localizedDescription
@@ -128,7 +184,7 @@ struct TableScreen: View {
 
     enum Mode: String, CaseIterable { case list = "List", board = "Board", insights = "Insights" }
 
-    init(table: NocoTable) { _model = State(initialValue: TableModel(table: table)) }
+    init(table: NocoTable, source: TableSource) { _model = State(initialValue: TableModel(table: table, source: source)) }
 
     private var filtered: [NocoRecord] {
         guard !search.isEmpty else { return model.records }
@@ -152,7 +208,7 @@ struct TableScreen: View {
 
             if Connectivity.shared.nocoOffline { OfflineBanner().padding(.horizontal).padding(.bottom, 6) }
             if let error = model.error {
-                ErrorCard(message: error) { Task { await model.load(config.noco) } }.padding(.horizontal)
+                ErrorCard(message: error) { Task { await model.load() } }.padding(.horizontal)
             }
 
             switch mode {
@@ -181,8 +237,8 @@ struct TableScreen: View {
             }
         }
         .overlay { if model.loading && model.records.isEmpty { ProgressView() } }
-        .task { if model.columns.isEmpty { await model.load(config.noco) } }
-        .refreshable { await model.load(config.noco) }
+        .task { if model.columns.isEmpty { await model.load() } }
+        .refreshable { await model.load() }
         .sheet(item: Binding(get: { editing.map(IdentifiedRecord.init) }, set: { editing = $0?.record })) { item in
             RecordEditor(model: model, record: item.record)
         }
@@ -302,7 +358,7 @@ struct BoardLane: View {
         .dropDestination(for: String.self) { ids, _ in
             guard let column, lane != "—", let id = ids.first.flatMap(Int.init) else { return false }
             UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-            Task { await model.set(id, column.title, .string(lane), client: config.noco) }
+            Task { await model.set(id, column.title, .string(lane)) }
             return true
         } isTargeted: { targeted = $0 }
     }

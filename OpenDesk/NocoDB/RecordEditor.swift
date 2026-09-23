@@ -145,12 +145,12 @@ struct RecordEditor: View {
         defer { saving = false }
         do {
             if let record {
-                try await config.noco.update(tableId: model.table.id, id: record.recordId, fields: changes)
+                try await model.source.update(id: record.recordId, fields: changes)
             } else {
-                try await config.noco.create(tableId: model.table.id, fields: changes)
+                try await model.source.create(fields: changes)
             }
             UINotificationFeedbackGenerator().notificationOccurred(.success)
-            await model.load(config.noco)
+            await model.load()
             dismiss()
         } catch {
             self.error = error.localizedDescription
@@ -160,8 +160,8 @@ struct RecordEditor: View {
     private func delete() async {
         guard let record else { return }
         do {
-            try await config.noco.delete(tableId: model.table.id, id: record.recordId)
-            await model.load(config.noco)
+            try await model.source.delete(id: record.recordId)
+            await model.load()
             dismiss()
         } catch {
             self.error = error.localizedDescription

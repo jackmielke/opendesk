@@ -14,6 +14,7 @@ struct BringDataView: View {
     @State private var csvPreview: CSVPreview?
     @State private var showShare = false
     @State private var showTeam = false
+    @State private var showSupabase = false
 
     enum ConnectionStatus: Equatable { case unknown, checking, ok(bases: Int, tables: Int), failed(String) }
 
@@ -51,6 +52,12 @@ struct BringDataView: View {
                 }
 
                 Section {
+                    Button { showSupabase = true } label: {
+                        row("Connect a Supabase app", "Already built on Supabase? Sign in as your app's user and browse your tables under your own security rules.", "bolt.horizontal.circle.fill", Brand.supabase)
+                    }
+                } header: { Label("Or bring your Supabase", systemImage: "bolt.horizontal.fill") }
+
+                Section {
                     Button { showAirtable = true } label: {
                         row("Import from Airtable", "Paste a base link and your Airtable token. NocoDB copies every table, view and record.", "arrow.down.doc.fill", .yellow)
                     }
@@ -82,6 +89,7 @@ struct BringDataView: View {
             .sheet(item: $csvPreview) { CSVImportView(preview: $0) { finish() } }
             .sheet(isPresented: $showShare) { ShareSetupView() }
             .sheet(isPresented: $showTeam) { TeamView() }
+            .sheet(isPresented: $showSupabase) { SupabaseConnectView() }
             .fileImporter(isPresented: $showCSVPicker, allowedContentTypes: [.commaSeparatedText, .plainText, .tabSeparatedText]) { result in
                 guard case .success(let url) = result else { return }
                 let access = url.startAccessingSecurityScopedResource()

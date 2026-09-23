@@ -66,6 +66,13 @@ final class TeamStore {
         await refreshTeams()
     }
 
+    func signIn(email: String, password: String) async throws {
+        let j = try await HTTP.json(JSONValue.self, SupabaseConfig.url + "/auth/v1/token?grant_type=password", method: "POST", headers: base,
+                                    body: ["email": email, "password": password])
+        try adopt(j)
+        await refreshTeams()
+    }
+
     /// Magic-link sign-in: the email link lands on opendesk://auth-callback#access_token=…
     func handleCallback(_ url: URL) async {
         guard let frag = url.fragment ?? URLComponents(url: url, resolvingAgainstBaseURL: false)?.query else { return }

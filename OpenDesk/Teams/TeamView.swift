@@ -26,6 +26,8 @@ private struct SignInForm: View {
     let store: TeamStore
     @State private var email = ""
     @State private var code = ""
+    @State private var password = ""
+    @State private var usePassword = false
     @State private var sent = false
     @State private var busy = false
     @State private var error: String?
@@ -44,11 +46,18 @@ private struct SignInForm: View {
             Section {
                 TextField("you@company.com", text: $email)
                     .keyboardType(.emailAddress).textInputAutocapitalization(.never).autocorrectionDisabled().textContentType(.emailAddress)
-                if sent {
-                    TextField("6-digit code", text: $code).keyboardType(.numberPad).textContentType(.oneTimeCode)
+                if usePassword {
+                    SecureField("Password", text: $password).textContentType(.password)
+                    Button("Sign in") { Task { await go() } }.disabled(busy || email.isEmpty || password.isEmpty)
+                } else {
+                    if sent {
+                        TextField("6-digit code", text: $code).keyboardType(.numberPad).textContentType(.oneTimeCode)
+                    }
+                    Button(sent ? "Sign in" : "Email me a sign-in link") { Task { await go() } }
+                        .disabled(busy || email.isEmpty || (sent && code.count < 6))
                 }
-                Button(sent ? "Sign in" : "Email me a sign-in link") { Task { await go() } }
-                    .disabled(busy || email.isEmpty || (sent && code.count < 6))
+                Button(usePassword ? "Use an email link instead" : "Use a password instead") { usePassword.toggle() }
+                    .font(.footnote)
             } footer: {
                 if sent { Text("Check \(email). Tap the link on this iPhone, or type the code if your email has one.") }
                 if let error { Text(error).foregroundStyle(.orange) }
@@ -63,7 +72,8 @@ private struct SignInForm: View {
         busy = true
         defer { busy = false }
         do {
-            if sent { try await store.verify(email: email, code: code) } else { try await store.sendCode(to: email); sent = true }
+            if usePassword { try await store.signIn(email: email, password: password) }
+            else if sent { try await store.verify(email: email, code: code) } else { try await store.sendCode(to: email); sent = true }
             error = nil
             if store.isSignedIn, let invite = store.pendingInvite { try await store.join(code: invite) }
         } catch { self.error = error.localizedDescription }

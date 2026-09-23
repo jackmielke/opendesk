@@ -135,7 +135,7 @@ struct PlanReview: View {
             default:
                 value = .string(e.value)
             }
-            await model.set(e.rowId, col.title, value, client: config.noco)
+            await model.set(e.rowId, col.title, value)
         }
         UINotificationFeedbackGenerator().notificationOccurred(.success)
         onApplied()
