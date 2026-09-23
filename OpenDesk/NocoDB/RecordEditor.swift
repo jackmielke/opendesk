@@ -170,5 +170,8 @@ struct RecordEditor: View {
 }
 
 extension String {
-    var singular: String { hasSuffix("s") ? String(dropLast()) : self }
+    var singular: String {
+        if hasSuffix("ies") { return String(dropLast(3)) + "y" }
+        return hasSuffix("s") ? String(dropLast()) : self
+    }
 }
