@@ -57,22 +57,22 @@ struct HomeView: View {
 
     private var connectors: some View {
         HStack(spacing: 10) {
-            connector("NocoDB", "tablecells.fill", Brand.noco, nocoOK) { tab = .tables }
+            connector("NocoDB", "tablecells.fill", Brand.noco, nocoOK, cached: Connectivity.shared.nocoOffline) { tab = .tables }
             connector("Grafana", "chart.xyaxis.line", Brand.grafana, grafanaOK) { tab = .dashboards }
             connector("GitLab", "chevron.left.forwardslash.chevron.right", Brand.gitlab, gitlabOK) { tab = .code }
         }
     }
 
-    private func connector(_ name: String, _ icon: String, _ color: Color, _ ok: Bool?, action: @escaping () -> Void) -> some View {
+    private func connector(_ name: String, _ icon: String, _ color: Color, _ ok: Bool?, cached: Bool = false, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             VStack(alignment: .leading, spacing: 8) {
                 HStack {
                     Image(systemName: icon).foregroundStyle(color)
                     Spacer()
-                    Circle().fill(ok == nil ? Color.gray : ok! ? .green : .red).frame(width: 7)
+                    Circle().fill(ok == nil ? Color.gray : cached ? .orange : ok! ? .green : .red).frame(width: 7)
                 }
                 Text(name).font(.subheadline.weight(.semibold))
-                Text(ok == nil ? "Connecting" : ok! ? "Live" : "Offline").font(.caption2).foregroundStyle(.secondary)
+                Text(ok == nil ? "Connecting" : cached ? "Cached" : ok! ? "Live" : "Offline").font(.caption2).foregroundStyle(.secondary)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .card(padding: 12)
@@ -222,12 +222,20 @@ struct HomeView: View {
             let noco = config.noco
             let bases = try await noco.bases()
             nocoOK = true
+            var all: [NocoTable] = []
             for b in bases {
                 let tables = try await noco.tables(baseId: b.id)
-                if let t = tables.first(where: { $0.title.lowercased() == "events" }) {
+                all += tables
+                if eventsTable == nil, let t = tables.first(where: { $0.title.lowercased() == "events" }) {
                     eventsTable = t
                     pipeline = try await noco.allRecords(tableId: t.id)
-                    return
+                }
+            }
+            // Warm the offline cache for every table so the app still works if the server drops.
+            Task.detached(priority: .background) {
+                for t in all {
+                    _ = try? await noco.columns(tableId: t.id)
+                    _ = try? await noco.allRecords(tableId: t.id)
                 }
             }
         } catch { nocoOK = false }

@@ -1,4 +1,5 @@
 import Foundation
+import Observation
 
 struct NocoBase: Identifiable, Hashable {
     let id: String
@@ -100,9 +101,20 @@ struct NocoClient {
 
     private var headers: [String: String] { ["xc-token": token] }
 
+    /// Reads go through a disk cache: fresh responses are saved, and when the server is unreachable
+    /// the last good copy is served instead so the app stays usable offline (and on stage).
     private func get(_ path: String) async throws -> JSONValue {
         guard !token.isEmpty else { throw APIError.notConfigured("NocoDB") }
-        return try await HTTP.json(JSONValue.self, baseURL + path, headers: headers)
+        do {
+            let data = try await HTTP.data(baseURL + path, headers: headers)
+            ResponseCache.save(data, for: path)
+            await MainActor.run { Connectivity.shared.nocoOffline = false }
+            return try JSONDecoder().decode(JSONValue.self, from: data)
+        } catch let error as URLError {
+            guard let cached = ResponseCache.load(for: path) else { throw error }
+            await MainActor.run { Connectivity.shared.nocoOffline = true }
+            return try JSONDecoder().decode(JSONValue.self, from: cached)
+        }
     }
 
     func bases() async throws -> [NocoBase] {
@@ -153,5 +165,34 @@ struct NocoClient {
 
     func delete(tableId: String, id: Int) async throws {
         _ = try await HTTP.data(baseURL + "/api/v2/tables/\(tableId)/records", method: "DELETE", headers: headers, body: [["Id": id]])
+    }
+}
+
+@Observable
+final class Connectivity {
+    static let shared = Connectivity()
+    var nocoOffline = false
+}
+
+enum ResponseCache {
+    private static var dir: URL? {
+        guard let base = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first else { return nil }
+        let d = base.appendingPathComponent("noco", isDirectory: true)
+        try? FileManager.default.createDirectory(at: d, withIntermediateDirectories: true)
+        return d
+    }
+
+    private static func file(_ key: String) -> URL? {
+        let safe = key.addingPercentEncoding(withAllowedCharacters: .alphanumerics) ?? String(key.hashValue)
+        return dir?.appendingPathComponent(String(safe.prefix(200)))
+    }
+
+    static func save(_ data: Data, for key: String) {
+        guard let f = file(key) else { return }
+        try? data.write(to: f, options: .atomic)
+    }
+
+    static func load(for key: String) -> Data? {
+        file(key).flatMap { try? Data(contentsOf: $0) }
     }
 }

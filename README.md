@@ -4,6 +4,19 @@ A native iOS app for the self-hosted, open-source tools companies already run: *
 
 Built at an AI enterprise hackathon in Palo Alto, September 2026.
 
+<p>
+<img src="docs/screenshots/home.jpg" width="200" alt="Home">
+<img src="docs/screenshots/board.jpg" width="200" alt="NocoDB board">
+<img src="docs/screenshots/review.jpg" width="200" alt="AI edit review">
+<img src="docs/screenshots/dashboard.jpg" width="200" alt="Grafana dashboard">
+</p>
+<p>
+<img src="docs/screenshots/alerts.jpg" width="200" alt="Grafana alerts">
+<img src="docs/screenshots/insights.jpg" width="200" alt="Table insights">
+<img src="docs/screenshots/project.jpg" width="200" alt="GitLab project">
+<img src="docs/screenshots/mr.jpg" width="200" alt="MR AI brief">
+</p>
+
 ## What it does
 
 | Module | Talks to | On the phone |
@@ -13,6 +26,7 @@ Built at an AI enterprise hackathon in Palo Alto, September 2026.
 | **Code** | GitLab `/api/v4` | Pinned OSS projects · MRs, issues, pipelines · CI health strip · diffs by file · job stages · comment, approve and retry with a token |
 | **Home** | all three | Cross-tool snapshot: pipeline value, a live Grafana signal and CI health · "Brief me" |
 | **Widget** | NocoDB | Home and lock screen widget with pipeline value and the next booked events |
+| **Offline** | NocoDB | Every read is cached to disk; if the server drops, the app keeps working from the last synced copy |
 | **Siri** | NocoDB, Grafana | "What's booked next in OpenDesk", "How's the pipeline in OpenDesk", "What's firing in OpenDesk" |
 
 ### AI, private by default
@@ -63,6 +77,5 @@ scripts/      seed_nocodb.py, make_icon.swift
 ## Roadmap ideas
 
 - Grafana alerting inbox with push (Alertmanager webhook → APNs), acknowledge/silence from the lock screen
-- NocoDB offline cache + background sync
 - More connectors on the same pattern: Metabase, Twenty, Plane, Zammad, Uptime Kuma
 - Upstream: contribute the NocoDB and Grafana clients as standalone Swift packages

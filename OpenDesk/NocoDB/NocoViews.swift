@@ -13,6 +13,7 @@ struct NocoHomeView: View {
     var body: some View {
         NavigationStack {
             List {
+                if Connectivity.shared.nocoOffline { OfflineBanner().listRowBackground(Color.clear) }
                 if let error {
                     ErrorCard(message: error) { Task { await load() } }
                         .listRowBackground(Color.clear)
@@ -146,6 +147,7 @@ struct TableScreen: View {
             .pickerStyle(.segmented)
             .padding(.horizontal).padding(.bottom, 8)
 
+            if Connectivity.shared.nocoOffline { OfflineBanner().padding(.horizontal).padding(.bottom, 6) }
             if let error = model.error {
                 ErrorCard(message: error) { Task { await model.load(config.noco) } }.padding(.horizontal)
             }
@@ -467,5 +469,16 @@ struct InsightsView: View {
             }
             .card()
         }
+    }
+}
+
+struct OfflineBanner: View {
+    var body: some View {
+        Label("Offline: showing the last synced copy. Edits need a connection.", systemImage: "icloud.slash")
+            .font(.caption.weight(.medium))
+            .foregroundStyle(.orange)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(10)
+            .background(Color.orange.opacity(0.12), in: RoundedRectangle(cornerRadius: 10))
     }
 }
