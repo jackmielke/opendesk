@@ -14,7 +14,16 @@ struct MetabaseHomeView: View {
     var body: some View {
         NavigationStack {
             List {
-                if let error { ErrorCard(message: error) { Task { await load() } }.listRowBackground(Color.clear) }
+                if error != nil && dashboards.isEmpty {
+                    ContentUnavailableView {
+                        Label("Metabase isn't reachable", systemImage: "chart.pie")
+                    } description: {
+                        Text("OpenDesk will load your dashboards as soon as \(URL(string: config.metabaseURL)?.host ?? "the server") responds.")
+                    } actions: {
+                        Button("Try again") { Task { await load() } }.buttonStyle(.bordered)
+                    }
+                    .listRowBackground(Color.clear)
+                }
                 ForEach(dashboards) { d in
                     NavigationLink(value: d) {
                         VStack(alignment: .leading, spacing: 4) {
@@ -70,7 +79,7 @@ struct MBDashboardScreen: View {
                         }
                     }
                 }
-                if let error { ErrorCard(message: error) { Task { await load() } } }
+                if error != nil { Label("Metabase isn't reachable right now · pull to retry", systemImage: "icloud.slash").font(.caption).foregroundStyle(.secondary) }
                 let scalars = visible.filter { ["scalar", "smartscalar", "progress", "gauge"].contains($0.display) }
                 if !scalars.isEmpty {
                     LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
@@ -152,7 +161,7 @@ struct MBCardView: View {
             if let result, !result.rows.isEmpty {
                 content(result)
             } else if failed {
-                Label("Couldn't run this question", systemImage: "exclamationmark.triangle").font(.caption).foregroundStyle(.secondary)
+                Text("No data yet").font(.caption).foregroundStyle(.tertiary).frame(maxWidth: .infinity, minHeight: 40, alignment: .leading)
             } else {
                 ProgressView().frame(maxWidth: .infinity, minHeight: 60)
             }

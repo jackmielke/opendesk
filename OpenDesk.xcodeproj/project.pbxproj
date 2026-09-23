@@ -23,6 +23,7 @@
 		5F2BDE32C8EF7749D724A0BC /* HTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464C7BE24CC53E4C9E2EDA36 /* HTTP.swift */; };
 		60B467DD5F91C14226679AA9 /* SupabaseConnectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6CF8ECCFFCD619642C9A5E0 /* SupabaseConnectView.swift */; };
 		6392F00A0D12AED4F22EFE4B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F3A42F1924C9B38EC54BADC /* Assets.xcassets */; };
+		63FE177B0EF814DB2A0C8C35 /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53AAE621E6E55A9A8CDC7342 /* GridView.swift */; };
 		6FE7B811FDF7CEAB7CA8B17B /* RecordEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0F4CE1974B39E5A92222335 /* RecordEditor.swift */; };
 		72629E30262269A9E5A7A600 /* LocalDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6A8E8EA4FD2B351B79693EEC /* LocalDefaults.plist */; };
 		7596D28CFD50FC1FBABCBC23 /* NocoViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B9B2BE85D4DBD915DD4A459 /* NocoViews.swift */; };
@@ -90,6 +91,7 @@
 		435F6619CC32091B838C88C7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		43DD232A1E963F5D68877EE3 /* OpenDeskApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenDeskApp.swift; sourceTree = "<group>"; };
 		464C7BE24CC53E4C9E2EDA36 /* HTTP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTP.swift; sourceTree = "<group>"; };
+		53AAE621E6E55A9A8CDC7342 /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
 		5566AB48EFA804717EF3D2E9 /* VoiceInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceInput.swift; sourceTree = "<group>"; };
 		65C65BC488C6366A004CC199 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		6A2FA5532700E20527B4AAE9 /* Shortcuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shortcuts.swift; sourceTree = "<group>"; };
@@ -287,6 +289,7 @@
 			children = (
 				D9EA6CD62816229C2C6DA99E /* AgendaView.swift */,
 				18A82EE78C82A27B8DFC03E7 /* CommandBar.swift */,
+				53AAE621E6E55A9A8CDC7342 /* GridView.swift */,
 				E2DE6DC12C30D8303241F1B3 /* NocoClient.swift */,
 				8B9B2BE85D4DBD915DD4A459 /* NocoViews.swift */,
 				B0F4CE1974B39E5A92222335 /* RecordEditor.swift */,
@@ -433,6 +436,7 @@
 				91B89CB78C35B9F4FFD1A192 /* GitLabViews.swift in Sources */,
 				30940D29A01E07581F268395 /* GrafanaClient.swift in Sources */,
 				F83108D491A29939F51C2519 /* GrafanaViews.swift in Sources */,
+				63FE177B0EF814DB2A0C8C35 /* GridView.swift in Sources */,
 				E8E408F3B577CF1F59821E33 /* HTTP.swift in Sources */,
 				3749C65A8518EC64A51BA8F3 /* HomeView.swift in Sources */,
 				EB35CC4B6E696F0445BF60CF /* Importers.swift in Sources */,
@@ -519,7 +523,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 2A35RW57TC;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -579,7 +583,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 2A35RW57TC;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;

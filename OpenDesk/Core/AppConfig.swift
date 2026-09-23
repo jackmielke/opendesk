@@ -27,6 +27,11 @@ final class AppConfig {
            let dict = NSDictionary(contentsOf: url) as? [String: String] {
             bundled = dict
         }
+        // When the bundled defaults move servers (configVersion bump), drop stale saved URLs.
+        if let v = bundled["configVersion"], UserDefaults.standard.string(forKey: "configVersion") != v {
+            for k in ["nocoURL", "nocoToken", "metabaseURL", "metabaseKey"] where bundled[k] != nil { UserDefaults.standard.removeObject(forKey: k) }
+            UserDefaults.standard.set(v, forKey: "configVersion")
+        }
         func load(_ key: String, _ fallback: String) -> String {
             UserDefaults.standard.string(forKey: key) ?? bundled[key] ?? fallback
         }

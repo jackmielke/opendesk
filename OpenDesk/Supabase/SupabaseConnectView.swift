@@ -90,13 +90,9 @@ struct SupabaseConnectView: View {
                 }
                 HStack(spacing: 12) {
                     stepBadge(2)
-                    SecureField("Paste token", text: $token)
+                    SecureField("Paste your token here", text: $token)
                         .textInputAutocapitalization(.never).autocorrectionDisabled()
                         .onSubmit { Task { await listProjects() } }
-                    PasteButton(payloadType: String.self) { items in
-                        Task { @MainActor in token = items.first ?? "" }
-                    }
-                    .labelStyle(.titleOnly).buttonBorderShape(.capsule).tint(Brand.supabase)
                 }
                 Button { Task { await listProjects() } } label: {
                     HStack {

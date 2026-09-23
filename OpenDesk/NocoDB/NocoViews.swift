@@ -17,9 +17,10 @@ struct NocoHomeView: View {
         NavigationStack {
             List {
                 if Connectivity.shared.nocoOffline { OfflineBanner().listRowBackground(Color.clear) }
-                if let error {
-                    ErrorCard(message: error) { Task { await load() } }
-                        .listRowBackground(Color.clear)
+                if error != nil {
+                    Button { Task { await load() } } label: {
+                        Label("NocoDB isn't reachable right now · Retry", systemImage: "arrow.clockwise").font(.caption).foregroundStyle(.secondary)
+                    }
                 }
                 if !AirtableStore.shared.bases.isEmpty {
                     ForEach(AirtableStore.shared.bases) { b in
@@ -205,7 +206,7 @@ struct TableScreen: View {
     @State private var creating = false
     @State private var askAI = false
 
-    enum Mode: String, CaseIterable { case agenda = "Agenda", list = "List", board = "Board", insights = "Insights" }
+    enum Mode: String, CaseIterable { case agenda = "Agenda", grid = "Grid", list = "List", board = "Board", insights = "Insights" }
 
     init(table: NocoTable, source: TableSource) { _model = State(initialValue: TableModel(table: table, source: source)) }
 
@@ -237,6 +238,7 @@ struct TableScreen: View {
             switch mode {
             case .agenda:
                 if let roles = AgendaRoles(model: model) { AgendaView(model: model, roles: roles) { editing = $0 } } else { listView }
+            case .grid: GridView(model: model, rows: filtered) { editing = $0 }
             case .list: listView
             case .board: boardView
             case .insights: InsightsView(model: model, groupColumn: groupColumn)
@@ -265,7 +267,7 @@ struct TableScreen: View {
         .task {
             if model.columns.isEmpty { await model.load() }
             // Tables with dates open on the Agenda: people think about events by when, not by row.
-            if !pickedDefault { pickedDefault = true; if AgendaRoles(model: model) != nil { mode = .agenda } }
+            if !pickedDefault { pickedDefault = true; mode = AgendaRoles(model: model) != nil ? .agenda : .grid }
         }
         .refreshable { await model.load() }
         .sheet(item: Binding(get: { editing.map(IdentifiedRecord.init) }, set: { editing = $0?.record })) { item in
@@ -568,11 +570,11 @@ struct InsightsView: View {
 
 struct OfflineBanner: View {
     var body: some View {
-        Label("Offline: showing the last synced copy. Edits need a connection.", systemImage: "icloud.slash")
-            .font(.caption.weight(.medium))
-            .foregroundStyle(.orange)
+        Label("Saved copy · can't reach the server right now", systemImage: "icloud.slash")
+            .font(.caption2.weight(.medium))
+            .foregroundStyle(.secondary)
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(10)
-            .background(Color.orange.opacity(0.12), in: RoundedRectangle(cornerRadius: 10))
+            .background(Color.white.opacity(0.05), in: RoundedRectangle(cornerRadius: 10))
     }
 }
