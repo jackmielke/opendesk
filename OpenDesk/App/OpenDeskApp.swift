@@ -13,7 +13,7 @@ struct OpenDeskApp: App {
     }
 }
 
-enum RootTab: Hashable { case home, tables, dashboards, analytics, code, whiteboard }
+enum RootTab: Hashable { case home, tables, dashboards, more }
 
 struct RootView: View {
     @Environment(AppConfig.self) private var config
@@ -27,9 +27,7 @@ struct RootView: View {
         case .home: Brand.ai
         case .tables: Brand.noco
         case .dashboards: Brand.grafana
-        case .analytics: Brand.metabase
-        case .whiteboard: Brand.excalidraw
-        case .code: Brand.gitlab
+        case .more: Brand.ai
         }
     }
 
@@ -38,9 +36,7 @@ struct RootView: View {
             Tab("Home", systemImage: "square.grid.2x2.fill", value: .home) { HomeView(tab: $tab).tint(Brand.ai) }
             Tab("Tables", systemImage: "tablecells.fill", value: .tables) { NocoHomeView().tint(Brand.noco) }
             Tab("Dashboards", systemImage: "chart.xyaxis.line", value: .dashboards) { GrafanaHomeView().tint(Brand.grafana) }
-            Tab("Analytics", systemImage: "chart.pie.fill", value: .analytics) { MetabaseHomeView().tint(Brand.metabase) }
-            Tab("Code", systemImage: "chevron.left.forwardslash.chevron.right", value: .code) { GitLabHomeView().tint(Brand.gitlab) }
-            Tab("Whiteboard", systemImage: "scribble.variable", value: .whiteboard) { WhiteboardHomeView().tint(Brand.excalidraw) }
+            Tab("More", systemImage: "person.crop.circle", value: .more) { MoreView().tint(Brand.ai) }
         }
         .tint(tint)
         .onAppear { if !config.onboarded { onboarding = true } }
@@ -93,9 +89,10 @@ struct RootView: View {
             switch url.host {
             case "tables": tab = .tables
             case "dashboards": tab = .dashboards
-            case "code": tab = .code
-            case "analytics": tab = .analytics
-            case "whiteboard": tab = .whiteboard
+            case "analytics":
+                tab = .dashboards
+                NotificationCenter.default.post(name: .showMetabase, object: nil)
+            case "code", "whiteboard", "more", "team": tab = .more
             default: tab = .home
             }
         }

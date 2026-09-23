@@ -15,8 +15,6 @@ struct HomeView: View {
     @State private var mrs: [GLItem] = []
     @State private var pipelines: [GLPipeline] = []
     @State private var gitlabProject: GLProject?
-    @State private var showSettings = false
-    @State private var showTeam = false
     @State private var connecting: Integration?
     @State private var brief = false
 
@@ -33,17 +31,6 @@ struct HomeView: View {
                 .padding()
             }
             .navigationTitle("OpenDesk")
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button { showTeam = true } label: {
-                        Label(TeamStore.shared.current?.name ?? "Team", systemImage: TeamStore.shared.isSignedIn ? "person.2.fill" : "person.2")
-                            .labelStyle(.titleAndIcon).font(.subheadline)
-                    }
-                }
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button { showSettings = true } label: { Image(systemName: "gearshape") }
-                }
-            }
             .refreshable { await load() }
             .task { await load() }
             .task {
@@ -52,8 +39,7 @@ struct HomeView: View {
                     if let p = try? await config.grafana.pulse(), !p.isEmpty { pulse = p }
                 }
             }
-            .sheet(isPresented: $showSettings, onDismiss: { Task { await load() } }) { SettingsView() }
-            .sheet(isPresented: $showTeam, onDismiss: { Task { await load() } }) { TeamView() }
+
             .sheet(isPresented: $brief) {
                 AskSheet(title: "Morning brief", accent: Brand.ai,
                          suggestions: ["Give me a 5-bullet brief across everything", "What should I do first today?", "Anything on fire?"]) {
@@ -79,7 +65,8 @@ struct HomeView: View {
             switch i {
             case .supabase: SupabaseConnectView()
             case .airtable: AirtableConnectView()
-            default: BringDataView()
+            case .noco: NocoConnectView()
+            default: SettingsView()
             }
         }
     }
@@ -111,9 +98,10 @@ struct HomeView: View {
                 switch i {
                 case .noco, .supabase, .airtable: tab = .tables
                 case .grafana: tab = .dashboards
-                case .metabase: tab = .analytics
-                case .gitlab: tab = .code
-                case .excalidraw: tab = .whiteboard
+                case .metabase:
+                    tab = .dashboards
+                    NotificationCenter.default.post(name: .showMetabase, object: nil)
+                case .gitlab, .excalidraw: tab = .more
                 }
             }
         } label: {
@@ -247,7 +235,7 @@ struct HomeView: View {
                 }
             }
             .card()
-            .onTapGesture { tab = .code }
+            .onTapGesture { tab = .more }
         }
     }
 

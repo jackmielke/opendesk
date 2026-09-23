@@ -12,10 +12,6 @@ struct SettingsView: View {
         NavigationStack {
             Form {
                 Section {
-                    Button { showBring = true } label: { Label("Bring your data: connect, import, invite", systemImage: "square.and.arrow.down.on.square") }
-                    Button { showShare = true } label: { Label("Share this setup with a teammate", systemImage: "qrcode") }
-                }
-                Section {
                     TextField("http://192.168.1.10:8080", text: $config.nocoURL).keyboardType(.URL).textInputAutocapitalization(.never).autocorrectionDisabled()
                     SecureField("API token (xc-token)", text: $config.nocoToken)
                 } header: { Label("NocoDB", systemImage: "tablecells.fill") } footer: {

@@ -43,6 +43,7 @@
 		C0EBFA4B787FF7225A6A8CD0 /* NocoClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DE6DC12C30D8303241F1B3 /* NocoClient.swift */; };
 		C1DD0C0283CC74A93C2E7A63 /* BringDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7962649323D45461729105F /* BringDataView.swift */; };
 		DDAF501CD2B7BA3C45C704AF /* TeamView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2F5081EDAD72CE4E54BF60 /* TeamView.swift */; };
+		E0EC58FE7F80E161D858E565 /* MoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 348AE4E53861B65D1570163B /* MoreView.swift */; };
 		E1AF14960E27DA05985A84A4 /* AgendaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EA6CD62816229C2C6DA99E /* AgendaView.swift */; };
 		E8E408F3B577CF1F59821E33 /* HTTP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464C7BE24CC53E4C9E2EDA36 /* HTTP.swift */; };
 		EAED8A5E794C895B84ED86B3 /* MetabaseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0BB8DD0220AC511222157F2 /* MetabaseClient.swift */; };
@@ -88,6 +89,7 @@
 		2DEE9EB775F8EE1A56F8DF1B /* MetabaseViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetabaseViews.swift; sourceTree = "<group>"; };
 		2EE7A1BEC9203C56CC5F7780 /* OpenDeskWidget.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = OpenDeskWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		32CDC1B059647E6A53EB5375 /* GrafanaViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrafanaViews.swift; sourceTree = "<group>"; };
+		348AE4E53861B65D1570163B /* MoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreView.swift; sourceTree = "<group>"; };
 		435F6619CC32091B838C88C7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		43DD232A1E963F5D68877EE3 /* OpenDeskApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenDeskApp.swift; sourceTree = "<group>"; };
 		464C7BE24CC53E4C9E2EDA36 /* HTTP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTP.swift; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 			isa = PBXGroup;
 			children = (
 				CE22F08AA322BBB5ACF0C742 /* HomeView.swift */,
+				348AE4E53861B65D1570163B /* MoreView.swift */,
 				435F6619CC32091B838C88C7 /* SettingsView.swift */,
 			);
 			path = Home;
@@ -444,6 +447,7 @@
 				24632B4999586FFDE68796BF /* LiveUpdates.swift in Sources */,
 				EAED8A5E794C895B84ED86B3 /* MetabaseClient.swift in Sources */,
 				AC9ED3AE71EA13184368CD6D /* MetabaseViews.swift in Sources */,
+				E0EC58FE7F80E161D858E565 /* MoreView.swift in Sources */,
 				A0C3AA1BD5B4814F57CDB78D /* NocoClient.swift in Sources */,
 				7596D28CFD50FC1FBABCBC23 /* NocoViews.swift in Sources */,
 				101A4E7E1C260AD51868F08F /* OpenDeskApp.swift in Sources */,

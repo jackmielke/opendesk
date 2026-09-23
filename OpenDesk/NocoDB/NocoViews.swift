@@ -12,6 +12,7 @@ struct NocoHomeView: View {
     @State private var importing = false
     @State private var showSupabase = false
     @State private var showAirtable = false
+    @State private var showNoco = false
 
     var body: some View {
         NavigationStack {
@@ -76,13 +77,19 @@ struct NocoHomeView: View {
             .navigationTitle("Tables")
             .toolbar {
                 Menu {
-                    Button { showSupabase = true } label: { Label("Supabase", systemImage: "bolt.fill") }
-                    Button { showAirtable = true } label: { Label("Airtable", systemImage: "square.stack.3d.up.fill") }
-                    Button { importing = true } label: { Label("NocoDB, CSV and teams", systemImage: "square.and.arrow.down") }
+                    Section("Connect") {
+                        Button { showSupabase = true } label: { Label("Supabase", systemImage: "bolt.fill") }
+                        Button { showAirtable = true } label: { Label("Airtable", systemImage: "square.stack.3d.up.fill") }
+                        Button { showNoco = true } label: { Label("NocoDB", systemImage: "tablecells") }
+                    }
+                    Section("Import") {
+                        Button { importing = true } label: { Label("Spreadsheet or Airtable base", systemImage: "square.and.arrow.down") }
+                    }
                 } label: { Image(systemName: "plus.circle") }
             }
             .sheet(isPresented: $showSupabase, onDismiss: { Task { await load() } }) { SupabaseConnectView() }
             .sheet(isPresented: $showAirtable, onDismiss: { Task { await load() } }) { AirtableConnectView() }
+            .sheet(isPresented: $showNoco, onDismiss: { Task { await load() } }) { NocoConnectView() }
             .sheet(isPresented: $importing, onDismiss: { Task { await load() } }) { BringDataView() }
             .navigationDestination(for: NocoTable.self) { t in
                 if t.baseId.hasPrefix("airtable:"), let at = AirtableStore.shared.tables[String(t.baseId.dropFirst(9))]?.first(where: { $0.id == t.id }) {

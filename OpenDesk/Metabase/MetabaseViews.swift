@@ -12,7 +12,6 @@ struct MetabaseHomeView: View {
     @State private var loaded = false
 
     var body: some View {
-        NavigationStack {
             List {
                 if error != nil && dashboards.isEmpty {
                     ContentUnavailableView {
@@ -34,11 +33,8 @@ struct MetabaseHomeView: View {
                 }
             }
             .overlay { if !loaded { ProgressView() } }
-            .navigationTitle("Analytics")
-            .navigationDestination(for: MBDashRef.self) { MBDashboardScreen(ref: $0) }
             .refreshable { await load() }
             .task { if !loaded { await load() } }
-        }
     }
 
     private func load() async {

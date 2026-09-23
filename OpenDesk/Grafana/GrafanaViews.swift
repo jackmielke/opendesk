@@ -12,17 +12,24 @@ struct GrafanaHomeView: View {
     var body: some View {
         NavigationStack {
             Group {
-                if section == 1 { AlertsView() } else { dashboardList }
+                switch section {
+                case 1: AlertsView()
+                case 2: MetabaseHomeView()
+                default: dashboardList
+                }
             }
             .safeAreaInset(edge: .top) {
                 Picker("", selection: $section) {
-                    Text("Dashboards").tag(0)
+                    Label("Grafana", systemImage: "chart.xyaxis.line").tag(0)
                     Text("Alerts").tag(1)
+                    Text("Metabase").tag(2)
                 }
                 .pickerStyle(.segmented).padding(.horizontal).padding(.bottom, 6)
             }
-            .navigationTitle(section == 0 ? "Dashboards" : "Alerts")
+            .navigationTitle("Dashboards")
             .navigationDestination(for: GrafanaDashRef.self) { DashboardScreen(ref: $0) }
+            .navigationDestination(for: MBDashRef.self) { MBDashboardScreen(ref: $0) }
+            .onReceive(NotificationCenter.default.publisher(for: .showMetabase)) { _ in section = 2 }
         }
     }
 
@@ -358,4 +365,8 @@ enum UnitFormat {
         default: return v.compact
         }
     }
+}
+
+extension Notification.Name {
+    static let showMetabase = Notification.Name("opendesk.showMetabase")
 }
